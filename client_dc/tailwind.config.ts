@@ -37,6 +37,12 @@ const config: Config = {
         },
         mint: 'var(--mint)',
       },
+      fontFamily: {
+        nl: ['NANUMSQUAREL'],
+        nr: ['NANUMSQUARER'],
+        nb: ['NANUMSQUAREB'],
+        neb: ['NANUMSQUAREEB'],
+      },
     },
   },
   plugins: [],

@@ -1,7 +1,10 @@
+'use client';
+
 import Image from 'next/image';
-import Delete from '../../public/delete.svg';
-import Plus from '../../public/plus.svg';
-import Refresh from '../../public/refresh.svg';
+// import Delete from '../../public/image/delete.svg';
+import Delete from '~/image/delete.svg';
+import Plus from '~/image/plus.svg';
+import Refresh from '~/image/refresh.svg';
 
 interface ButtonProps {
   title: string;
@@ -41,3 +44,8 @@ export default function Button(props: ButtonProps) {
     </div>
   );
 }
+
+// - 글로벌 폰트 설정해서 인트로 목업 만든 뒤 pr
+// - 공동컴포넌트 부터 작업
+// - jr : 공동 컴포넌트 목업만들기 이슈 하위 이슈로 관리, 이벤트 핸들러가 되는 수준정도
+// - 이슈는 개인 페이지에서만
