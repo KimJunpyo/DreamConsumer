@@ -36,3 +36,7 @@
   font-family: 'NANUMSQUAREEB';
   src: url('../../public/font/NANUMSQUAREEB.OTF');
 }
+
+input[type='password'] {
+  font-family: 'Malgun gothic', dotum, sans-serif;
+}

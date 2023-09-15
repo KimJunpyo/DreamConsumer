@@ -5,7 +5,7 @@
 type Props = {
   inputType: string;
   inputName?: string;
-  value: string;
+  value: string | number;
   placeholder?: string;
   hasBorder?: boolean;
   width?: string;
