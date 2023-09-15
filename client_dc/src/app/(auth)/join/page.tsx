@@ -6,6 +6,7 @@ import { validate } from './_util/validate';
 import { SIGN_UP_INPUT_LIST } from './_util/constants';
 import { useState } from 'react';
 import type { FormError, FormValuesWithoutBooleans } from './_util/types';
+import SocialLogin from '../_components/SocialLogin';
 
 export default function Join() {
   const initialValue = {
@@ -77,6 +78,7 @@ export default function Join() {
           </Checkbox>
         </div>
         <Button title='회원가입' items='redLarge' />
+        <SocialLogin />
       </section>
     </div>
   );
