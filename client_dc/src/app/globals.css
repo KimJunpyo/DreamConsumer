@@ -19,3 +19,20 @@
   --tagPurple: #c8bfff;
   --mint: #74ffe6;
 }
+
+@font-face {
+  font-family: 'NANUMSQUAREL';
+  src: url('../../public/font/NANUMSQUAREL.OTF');
+}
+@font-face {
+  font-family: 'NANUMSQUARER';
+  src: url('../../public/font/NANUMSQUARER.OTF');
+}
+@font-face {
+  font-family: 'NANUMSQUAREB';
+  src: url('../../public/font/NANUMSQUAREB.OTF');
+}
+@font-face {
+  font-family: 'NANUMSQUAREEB';
+  src: url('../../public/font/NANUMSQUAREEB.OTF');
+}
