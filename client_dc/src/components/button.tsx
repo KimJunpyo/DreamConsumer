@@ -18,6 +18,7 @@ interface ButtonProps {
   fontSize?: number | string;
   color?: string;
   icon?: 'delete' | 'plus' | 'refresh';
+  handler?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const ICONS = {
@@ -34,6 +35,7 @@ export default function Button({
   color,
   fontSize,
   font,
+  handler,
 }: ButtonProps) {
   const IconImage = icon ? ICONS[icon] : null;
 
@@ -44,6 +46,7 @@ export default function Button({
       } ${color ? `bg-${color}-primary` : 'bg-grey-cancel'} text-${
         fontSize ? fontSize : 'xs'
       } font-${font && font} text-white rounded-xl`}
+      onClick={handler}
     >
       {IconImage && <Image src={IconImage} alt={icon || ''} className='mr-2' />}
       {children}
