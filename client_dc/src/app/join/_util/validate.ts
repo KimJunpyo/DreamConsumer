@@ -23,13 +23,17 @@ export const validate = (values: FormValues) => {
     errors.userName = SIGN_UP_ERROR_MESSAGE.NAME;
   }
 
-  // if (!values.job) {
-  //   errors.job = SIGN_UP_ERROR_MESSAGE.JOB;
-  // }
+  if (!values.job) {
+    errors.job = SIGN_UP_ERROR_MESSAGE.JOB;
+  }
 
-  // if (!values.age) {
-  //   errors.age = SIGN_UP_ERROR_MESSAGE.AGE;
-  // }
+  if (!values.age) {
+    errors.age = SIGN_UP_ERROR_MESSAGE.AGE;
+  }
+
+  if (!values.personalInfoConsent) {
+    errors.personalInfoConsent = SIGN_UP_ERROR_MESSAGE.PERSONAL_INFO_CONSENT;
+  }
 
   return errors;
 };

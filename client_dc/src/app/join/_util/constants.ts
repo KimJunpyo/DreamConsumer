@@ -1,4 +1,4 @@
-export const SIGN_UP_FORM_LIST = [
+export const SIGN_UP_INPUT_LIST = [
   { inputName: 'email', inputType: 'text', label: '이메일' },
   { inputName: 'password', inputType: 'password', label: '비밀번호' },
   { inputName: 'confirmPassword', inputType: 'password', label: '비밀번호 확인' },
@@ -12,4 +12,5 @@ export const SIGN_UP_ERROR_MESSAGE = {
   NAME: '* 2자 이상, 한글과 영문만 입력 가능합니다.',
   JOB: '* 필수 입력값입니다.',
   AGE: '* 필수 입력값입니다.',
+  PERSONAL_INFO_CONSENT: '* 필수 동의 항목입니다.',
 };
