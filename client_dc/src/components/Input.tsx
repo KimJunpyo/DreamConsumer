@@ -9,7 +9,7 @@ type Props = {
   placeholder?: string;
   hasBorder?: boolean;
   width?: string;
-  handler: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  handler: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function Input({
