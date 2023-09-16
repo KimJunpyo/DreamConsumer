@@ -2,7 +2,6 @@ import Nav from '@/components/NavBar';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Checkbox from '@/components/Checkbox';
 
 const inter = Inter({ subsets: ['latin'] });
 
