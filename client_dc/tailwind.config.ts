@@ -37,6 +37,31 @@ const config: Config = {
         },
         mint: 'var(--mint)',
       },
+      fontFamily: {
+        nl: ['NANUMSQUAREL'],
+        nr: ['NANUMSQUARER'],
+        nb: ['NANUMSQUAREB'],
+        neb: ['NANUMSQUAREEB'],
+      },
+      keyframes: {
+        'ease-down': {
+          from: { transform: 'scaleY(0)' },
+          to: { transform: 'scaleY(1)' },
+        },
+        'ease-up': {
+          from: { transform: 'scaleY(1)' },
+          to: { transform: 'scaleY(0)' },
+        },
+        'show-shadow': {
+          from: { boxShadow: '0 0 0 0 rgba(0, 0, 0, 0)' },
+          to: { boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.25)' },
+        },
+      },
+      animation: {
+        'ease-down': 'ease-down 0.3s forwards',
+        'ease-up': 'ease-up 0.3s forwards',
+        'show-shadow': 'show-shadow 0.3s forwards',
+      },
     },
   },
   plugins: [],
