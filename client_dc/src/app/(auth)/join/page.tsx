@@ -3,10 +3,12 @@
 import { Input, Checkbox, Button } from '@/components';
 import useForm from '@/hooks/useForm';
 import { validate } from './_util/validate';
-import { SIGN_UP_INPUT_LIST } from './_util/constants';
-import { useState } from 'react';
+import { SIGN_UP_INPUT_LIST, JOB_LIST } from './_util/constants';
+import { useState, useMemo } from 'react';
 import type { FormError, FormValuesWithoutBooleans } from './_util/types';
 import SocialLogin from '../_components/SocialLogin';
+import { generateRange } from '@/common/functions';
+import { join } from '../_util/api';
 
 export default function Join() {
   const initialValue = {
@@ -21,13 +23,24 @@ export default function Join() {
   };
   const { values, handleChange } = useForm(initialValue);
   const [errors, setErrors] = useState<FormError>({});
+  const AGE_RANGE = useMemo(() => generateRange(1950, 2015), []);
 
-  const signUp = () => {
+  const signUp = async () => {
     const errors = validate(values);
     setErrors(errors);
 
     const isValid = Object.keys(errors).length === 0;
-    // 추후 api 요청 로직 작성
+
+    const body = {
+      userName: values.userName,
+      email: values.email,
+      password: values.password,
+      job: values.job,
+      age: Number(values.age),
+      emailAcceptance: values.emailAcceptance,
+    };
+
+    if (isValid) await join(body);
   };
 
   return (
@@ -50,11 +63,20 @@ export default function Join() {
             />
           </div>
         ))}
+        {/* TODO: select component 개발 완료시 수정 */}
         {/* <select name='job' onChange={handleChange}>
-          <option value='학생'>학생</option>
-          <option value='회사원'>회사원</option>
-          <option value='프리랜서'>프리랜서</option>
-          <option value='무직'>무직</option>
+          {JOB_LIST.map((job) => (
+            <option key={job} value={job}>
+              {job}
+            </option>
+          ))}
+        </select>
+        <select name='age' onChange={handleChange}>
+          {AGE_RANGE.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
         </select> */}
       </section>
       <section className='px-11 pt-4 font-nr'>
@@ -77,6 +99,7 @@ export default function Join() {
             (선택) 이메일 수신 동의
           </Checkbox>
         </div>
+        {/* TODO: button component 수정사항 반영시 수정 */}
         <Button title='회원가입' items='redLarge' />
         <SocialLogin />
       </section>

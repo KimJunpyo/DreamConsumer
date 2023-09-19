@@ -14,3 +14,5 @@ export const SIGN_UP_ERROR_MESSAGE = {
   AGE: '* 필수 입력값입니다.',
   PERSONAL_INFO_CONSENT: '* 필수 동의 항목입니다.',
 };
+
+export const JOB_LIST = ['학생', '회사원', '프리랜서', '무직'];
