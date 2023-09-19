@@ -5,7 +5,7 @@ import useForm from '@/hooks/useForm';
 import { validate } from './_util/validate';
 import { SIGN_UP_INPUT_LIST, JOB_LIST } from './_util/constants';
 import { useState, useMemo } from 'react';
-import type { FormError, FormValuesWithoutBooleans } from './_util/types';
+import type { SignUpError, SignUpValuesWithoutBooleans } from './_util/types';
 import SocialLogin from '../_components/SocialLogin';
 import { generateRange } from '@/common/functions';
 import { join } from '../_util/api';
@@ -22,7 +22,7 @@ export default function Join() {
     personalInfoConsent: false,
   };
   const { values, handleChange } = useForm(initialValue);
-  const [errors, setErrors] = useState<FormError>({});
+  const [errors, setErrors] = useState<SignUpError>({});
   const AGE_RANGE = useMemo(() => generateRange(1950, 2015), []);
 
   const signUp = async () => {
@@ -53,12 +53,12 @@ export default function Join() {
               <label className='text-white text-sm font-medium font-nr whitespace-nowrap'>
                 {form.label}
               </label>
-              <p className='text-red-text text-xs'>{errors[form.inputName as keyof FormError]}</p>
+              <p className='text-red-text text-xs'>{errors[form.inputName as keyof SignUpError]}</p>
             </div>
             <Input
               inputType={form.inputType}
               inputName={form.inputName}
-              value={values[form.inputName as keyof FormValuesWithoutBooleans]}
+              value={values[form.inputName as keyof SignUpValuesWithoutBooleans]}
               handler={handleChange}
             />
           </div>

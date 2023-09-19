@@ -1,4 +1,4 @@
-export type FormValues = {
+export type SignUpValues = {
   userName: string;
   email: string;
   password: string;
@@ -9,8 +9,11 @@ export type FormValues = {
   personalInfoConsent: boolean;
 };
 
-export type FormValuesWithoutBooleans = Omit<FormValues, 'emailAcceptance' | 'personalInfoConsent'>;
+export type SignUpValuesWithoutBooleans = Omit<
+  SignUpValues,
+  'emailAcceptance' | 'personalInfoConsent'
+>;
 
-export type FormError = {
-  [key in keyof FormValues]?: string;
+export type SignUpError = {
+  [key in keyof SignUpValues]?: string;
 };

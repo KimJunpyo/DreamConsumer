@@ -1,8 +1,8 @@
-import type { FormValues, FormError } from './types';
+import type { SignUpValues, SignUpError } from './types';
 import { SIGN_UP_ERROR_MESSAGE } from './constants';
 
-export const validate = (values: FormValues) => {
-  const errors: FormError = {};
+export const validate = (values: SignUpValues) => {
+  const errors: SignUpError = {};
 
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailPattern.test(values.email)) {
