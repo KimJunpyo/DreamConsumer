@@ -1,3 +1,5 @@
+'use client';
+
 import Dropdown from '@/components/Dropdown';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,7 +31,6 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <Dropdown list={['학생', '선생']} prevIcon={true} />
     </div>
   );
 }
