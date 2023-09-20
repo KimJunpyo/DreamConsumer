@@ -6,7 +6,7 @@ import DownArrow from '~/image/DownArrow.svg';
 import DarkDownArrow from '~/image/DarkDownArrow.svg';
 import WhiteDownArrow from '~/image/whiteDownArrow.svg';
 
-type props = {
+type Props = {
   list: number[] | string[];
   prevIcon?: boolean;
   borderless?: boolean;
@@ -35,7 +35,7 @@ type props = {
       /> */
 }
 
-export default function Dropdown({ list, prevIcon, borderless, filled, width, setState }: props) {
+export default function Dropdown({ list, prevIcon, borderless, filled, width, setState }: Props) {
   const [clickDropdown, setClickDropdown] = useState<boolean>(false);
   const [showOptions, setShowOptions] = useState<boolean>(false);
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
