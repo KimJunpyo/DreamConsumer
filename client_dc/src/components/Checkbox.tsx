@@ -3,7 +3,7 @@
 type Props = {
   children: string;
   value: boolean;
-  inputName?: string;
+  inputName: string;
   handler: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -16,8 +16,11 @@ export default function Checkbox({ children, value, inputName, handler }: Props)
         checked={value}
         name={inputName}
         onChange={handler}
+        id={inputName}
       />
-      <label className='text-grey-text text-sm'>{children}</label>
+      <label className='text-grey-text text-sm font-nr' htmlFor={inputName}>
+        {children}
+      </label>
     </div>
   );
 }
