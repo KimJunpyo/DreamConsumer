@@ -1,6 +1,5 @@
-interface ButtonProps {
-  title?: string;
-  icon?: 'delete' | 'plus' | 'refresh';
+interface TagProps {
+  children: string;
   items: keyof typeof itemVariants;
 }
 
@@ -21,6 +20,6 @@ const itemVariants = {
     'inline-flex justify-center items-center px-5 py-2 bg-tag-purple text-base text-white rounded-full',
 };
 
-export default function Tags(props: ButtonProps) {
-  return <div className={`${itemVariants[props.items]}`}>{props.title}</div>;
+export default function Tags({ children, items }: TagProps) {
+  return <div className={`${itemVariants[items]} mr-1`}>{children}</div>;
 }
