@@ -1,6 +1,6 @@
 'use client';
 
-import { Input, Checkbox, Button } from '@/components';
+import { Input, Checkbox, Button, Dropdown } from '@/components';
 import useForm from '@/hooks/useForm';
 import { validate } from './_util/validate';
 import { SIGN_UP_INPUT_LIST, JOB_LIST } from './_util/constants';
@@ -23,10 +23,12 @@ export default function Join() {
   };
   const { values, handleChange } = useForm(initialValue);
   const [errors, setErrors] = useState<SignUpError>({});
-  const AGE_RANGE = useMemo(() => generateRange(1950, 2015), []);
+  const [job, setJob] = useState('');
+  const [age, setAge] = useState('');
+  const AGE_RANGE = useMemo(() => generateRange(1950, 2015).map(String), []);
 
   const signUp = async () => {
-    const errors = validate(values);
+    const errors = validate({ ...values, job, age: Number(age) });
     setErrors(errors);
 
     const isValid = Object.keys(errors).length === 0;
@@ -35,8 +37,8 @@ export default function Join() {
       userName: values.userName,
       email: values.email,
       password: values.password,
-      job: values.job,
-      age: Number(values.age),
+      job,
+      age: Number(age),
       emailAcceptance: values.emailAcceptance,
     };
 
@@ -46,7 +48,7 @@ export default function Join() {
   return (
     <div className='m-auto'>
       <section className='bg-blue-primary px-11 py-4'>
-        <h1 className='text-white text-4xl font-nb my-5'>회원가입</h1>
+        <h1 className='text-white text-4xl font-nb mt-[5vh] mb-5'>회원가입</h1>
         {SIGN_UP_INPUT_LIST.map((form) => (
           <div className='my-2 font-nr' key={form.label}>
             <div className='flex items-center gap-2'>
@@ -63,21 +65,26 @@ export default function Join() {
             />
           </div>
         ))}
-        {/* TODO: select component 개발 완료시 수정 */}
-        {/* <select name='job' onChange={handleChange}>
-          {JOB_LIST.map((job) => (
-            <option key={job} value={job}>
-              {job}
-            </option>
-          ))}
-        </select>
-        <select name='age' onChange={handleChange}>
-          {AGE_RANGE.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select> */}
+        <div className='flex justify-between font-nr pb-2'>
+          <div className='w-[48%]'>
+            <div className='flex items-center gap-2'>
+              <label className='text-white text-sm font-medium font-nr whitespace-nowrap'>
+                직업
+              </label>
+              <p className='text-red-text text-xs'>{errors.job}</p>
+            </div>
+            <Dropdown list={JOB_LIST} width='w-full' setState={setJob} borderless={false} />
+          </div>
+          <div className='w-[48%]'>
+            <div className='flex items-center gap-2'>
+              <label className='text-white text-sm font-medium font-nr whitespace-nowrap'>
+                나이
+              </label>
+              <p className='text-red-text text-xs'>{errors.age}</p>
+            </div>
+            <Dropdown list={AGE_RANGE} width='w-full' setState={setAge} borderless={false} />
+          </div>
+        </div>
       </section>
       <section className='px-11 pt-4 font-nr'>
         <div className='pb-4'>
@@ -99,8 +106,15 @@ export default function Join() {
             (선택) 이메일 수신 동의
           </Checkbox>
         </div>
-        {/* TODO: button component 수정사항 반영시 수정 */}
-        <Button title='회원가입' items='redLarge' />
+        <Button
+          height='h-12'
+          font='font-nb'
+          fontSize='text-lg'
+          color='bg-red-primary'
+          handler={signUp}
+        >
+          회원가입
+        </Button>
         <SocialLogin />
       </section>
     </div>

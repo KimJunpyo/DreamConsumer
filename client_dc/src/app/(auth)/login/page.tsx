@@ -21,7 +21,6 @@ export default function Login() {
 
     const isValid = Object.keys(errors).length === 0;
     if (isValid) await login(values);
-    // TODO: API 연결 후 토큰 로직 추가 필요
   };
 
   return (
@@ -46,8 +45,15 @@ export default function Login() {
         ))}
       </section>
       <section className='px-11 pt-4 font-nr'>
-        {/* TODO: button component 수정사항 반영시 수정 */}
-        <Button title='로그인' items='redLarge' />
+        <Button
+          height='h-12'
+          font='font-nb'
+          fontSize='text-lg'
+          color='bg-red-primary'
+          handler={signIn}
+        >
+          로그인
+        </Button>
         <Link
           href='/join'
           className='font-nr block text-sm text-center text-grey-text underline underline-offset-[6px] my-6'
