@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const test = atom({
-  key: 'test',
-  default: 1,
+export const clickEdit = atom({
+  key: 'clickEdit',
+  default: false,
 });

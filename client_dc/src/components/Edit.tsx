@@ -1,6 +1,7 @@
-import Image from 'next/image';
-import { useState } from 'react';
-import EditImg from '~/image/edit.svg';
+import { clickEdit } from '@/recoil/atoms';
+import { useRecoilState } from 'recoil';
+
+import EditImg from '@/components/EditImg';
 
 interface EditProps {
   marginRight?: string;
@@ -8,15 +9,16 @@ interface EditProps {
 }
 
 export default function Edit({ marginRight, handler }: EditProps) {
-  const [editClick, setEidtClick] = useState(false);
+  const [editClick, setEidtClick] = useRecoilState(clickEdit);
   const change = () => {
     setEidtClick(!editClick);
   };
-  // console.log(editClick);
 
   return (
     <div
-      className={`bg-red-600 py-[2px] px-2 rounded-xl flex items-center justify-between font-neb text-xs text-blue-primary ${
+      className={`${
+        editClick ? 'bg-grey-text text-white' : 'text-blue-primary'
+      }  py-[2px] px-2 rounded-xl flex items-center justify-between font-neb text-xs  ${
         marginRight && marginRight
       }
       }`}
@@ -26,7 +28,7 @@ export default function Edit({ marginRight, handler }: EditProps) {
       }}
     >
       <div className='flex items-center'>
-        <Image src={EditImg} alt='edit' />
+        <EditImg />
         편집
       </div>
     </div>

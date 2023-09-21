@@ -8,8 +8,8 @@ import Pagination from './_components/Pagination';
 import { Button } from '@/components';
 import { useRouter } from 'next/navigation';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { test } from '@/recoil/atoms';
+import { useRecoilValue } from 'recoil';
+import { clickEdit } from '@/recoil/atoms';
 
 export default function Main() {
   const router = useRouter();
@@ -29,8 +29,7 @@ export default function Main() {
     setCurruntPage(page);
   }
 
-  const [test1, setTest1] = useRecoilState(test);
-  console.log(test1);
+  const editValue = useRecoilValue(clickEdit);
 
   return (
     <div className=' flex flex-col justify-between items-center' style={{ height: '75vh' }}>
@@ -51,19 +50,35 @@ export default function Main() {
           handler={setPage}
         />
       </div>
-      <div className='fixed bottom-14 right-5'>
-        <Button
-          font='font-neb'
-          width='w-36'
-          height='h-12'
-          color='bg-blue-primary'
-          fontSize='text-xl'
-          icon='plus'
-          handler={writeRouter}
-        >
-          등록하기
-        </Button>
-      </div>
+
+      {editValue ? (
+        <div className='w-full fixed bottom-14 flex justify-center'>
+          <Button
+            font='font-neb'
+            width='w-10/12'
+            height='h-14'
+            color='bg-red-primary'
+            fontSize='text-xl'
+            icon='delete'
+          >
+            삭제하기
+          </Button>
+        </div>
+      ) : (
+        <div className='fixed bottom-14 right-5'>
+          <Button
+            font='font-neb'
+            width='w-36'
+            height='h-12'
+            color='bg-blue-primary'
+            fontSize='text-xl'
+            icon='plus'
+            handler={writeRouter}
+          >
+            등록하기
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

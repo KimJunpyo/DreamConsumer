@@ -8,7 +8,7 @@ interface LikeProps {
 }
 
 export default function Like({ handler }: LikeProps) {
-  const [click, setClick] = useState(true);
+  const [click, setClick] = useState(false);
   const change = () => {
     setClick(!click);
   };
@@ -19,7 +19,7 @@ export default function Like({ handler }: LikeProps) {
         handler;
       }}
     >
-      <LikeIcon color={click === true ? 'yellow' : 'grey'} />
+      <LikeIcon color={click ? 'yellow' : 'grey'} />
     </div>
   );
 }
