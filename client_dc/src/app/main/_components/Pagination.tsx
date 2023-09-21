@@ -16,7 +16,7 @@ export default function Pagination({
   totalButtons = totalButtons.map((_, index) => index + 1);
 
   return (
-    <div>
+    <div className='flex justify-center'>
       {totalButtons.map((pageNumber, idx) => {
         return (
           <button

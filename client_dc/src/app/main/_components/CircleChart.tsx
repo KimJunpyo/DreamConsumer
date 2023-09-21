@@ -6,7 +6,7 @@ export default function CircleChart({ percent }: CircleChartProps) {
   const strokeDashoffsetValue = ((100 - percent) / 100) * (2 * Math.PI * 42);
 
   return (
-    <div className=' relative '>
+    <div className=' relative h-full'>
       <svg className='w-full h-full transform -rotate-90' viewBox='0 0 100 100'>
         <defs>
           <linearGradient id='grad1' x1='100%' y1='0%' x2='100%' y2='100%'>

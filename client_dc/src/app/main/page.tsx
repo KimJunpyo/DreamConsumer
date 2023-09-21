@@ -6,8 +6,17 @@ import Search from './_components/Search';
 import Edit from '@/components/Edit';
 import Pagination from './_components/Pagination';
 import { Button } from '@/components';
+import { useRouter } from 'next/navigation';
+
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { test } from '@/recoil/atoms';
 
 export default function Main() {
+  const router = useRouter();
+  const writeRouter = () => {
+    router.push('/write');
+  };
+
   const [data, setData] = useState([1, 2, 3, 4, 5, 6, 7]);
   const [postsPerPage, setPostsPerPage] = useState(3);
   const [curruntPage, setCurruntPage] = useState(1);
@@ -20,8 +29,11 @@ export default function Main() {
     setCurruntPage(page);
   }
 
+  const [test1, setTest1] = useRecoilState(test);
+  console.log(test1);
+
   return (
-    <div className='flex flex-col items-center'>
+    <div className=' flex flex-col justify-between items-center' style={{ height: '75vh' }}>
       <Search />
       <div className='flex items-center justify-between w-10/12 mt-12 mb-5'>
         <p className='font-neb text-base text-grey-text'>생성된 목표</p>
@@ -30,10 +42,7 @@ export default function Main() {
           <div>전체 정렬</div>
         </div>
       </div>
-      <div className='w-full h-full flex flex-col items-center mb-14'>
-        {totalPosts}
-        {/* <div className='absolute bottom-28'> */}
-      </div>
+      <div className='w-full h-full flex flex-col items-center mb-14'>{totalPosts}</div>
       <div>
         <Pagination
           totalPosts={data.length}
@@ -41,6 +50,8 @@ export default function Main() {
           curruntPage={curruntPage}
           handler={setPage}
         />
+      </div>
+      <div className='fixed bottom-14 right-5'>
         <Button
           font='font-neb'
           width='w-36'
@@ -48,6 +59,7 @@ export default function Main() {
           color='bg-blue-primary'
           fontSize='text-xl'
           icon='plus'
+          handler={writeRouter}
         >
           등록하기
         </Button>
