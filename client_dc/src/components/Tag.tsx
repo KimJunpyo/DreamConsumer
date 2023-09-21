@@ -1,3 +1,9 @@
+interface ButtonProps {
+  title?: string;
+  icon?: 'delete' | 'plus' | 'refresh';
+  items: keyof typeof itemVariants;
+}
+
 interface TagProps {
   children: string;
   items: keyof typeof itemVariants;

@@ -1,5 +1,5 @@
 import Like from '@/components/Like';
-import Tags from '@/components/Ttag';
+import Tags from '@/components/Tag';
 import Label from '@/app/main/_components/label';
 import CircleChart from './CircleChart';
 import { useRecoilValue } from 'recoil';

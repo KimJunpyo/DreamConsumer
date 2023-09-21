@@ -9,14 +9,12 @@ type Props = {
 
 export default function ProgressBar({ progress = 0, width, height, displayPercentage }: Props) {
   const getBarColor = (progress: number) => {
-    if (progress < 34) return '--lightBlue';
-    else if (progress < 67) return '--orange';
-    else return '--primaryRed';
+    if (progress < 34) return '#85daff';
+    else if (progress < 67) return '#ffaa85';
+    else return '#ff8585';
   };
 
-  const barColorVarName = getBarColor(progress);
-  const rootStyles = getComputedStyle(document.documentElement);
-  const barColor = rootStyles.getPropertyValue(barColorVarName).trim();
+  const barColor = getBarColor(progress);
 
   const barStyle = {
     width: `${progress}%`,
