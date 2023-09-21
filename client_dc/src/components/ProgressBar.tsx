@@ -4,10 +4,11 @@ type Props = {
   progress: number;
   width?: string;
   height?: string;
-  displayPercentage?: boolean;
+  displayText?: boolean;
+  price?: number;
 };
 
-export default function ProgressBar({ progress = 0, width, height, displayPercentage }: Props) {
+export default function ProgressBar({ progress = 0, width, height, displayText, price }: Props) {
   const getBarColor = (progress: number) => {
     if (progress < 34) return '#85daff';
     else if (progress < 67) return '#ffaa85';
@@ -30,13 +31,13 @@ export default function ProgressBar({ progress = 0, width, height, displayPercen
       }`}
     >
       <div className='h-full rounded-full' style={barStyle}></div>
-      {displayPercentage && (
+      {displayText && (
         <div
           className={`absolute inset-0 flex items-center justify-center text-sm font-medium ${
             progress >= 60 ? 'text-white' : 'text-grey-text'
           }`}
         >
-          {progress}%
+          {price ? `${price.toLocaleString()}원` : `${progress}%`}
         </div>
       )}
     </div>
