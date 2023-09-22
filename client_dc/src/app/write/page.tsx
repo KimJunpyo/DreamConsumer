@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { Button } from '@/components';
 import Checkbox from '@/components/Checkbox';
 import BlankImage from '~/image/blankImage.png';
+import Dropdown from '@/components/Dropdown';
 
 export default function Write() {
   const [productName, setProductName] = useState<string>('');
@@ -18,6 +19,7 @@ export default function Write() {
   const [autoSavings, setAutoSavings] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<File | null>();
   const [preview, setPreview] = useState<string | null>();
+  const [check, setCheck] = useState<string>('Daily');
 
   const handleChangeValue = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -93,7 +95,10 @@ export default function Write() {
         />
       </form>
       <label className='font-neb text-grey-text text-xl'>
-        제품명
+        <div className='flex justify-between items-center'>
+          <span>제품명</span>
+          <span className='text-red-text text-xs border-b border-red-text'>최저가 검색하기</span>
+        </div>
         <Input
           inputType='text'
           value={productName}
@@ -104,7 +109,7 @@ export default function Write() {
       </label>
       <label className='font-neb text-grey-text text-xl'>
         구매 링크
-        <div className='flex'>
+        <div className='flex gap-2'>
           <Input
             inputType='text'
             value={productLink}
@@ -125,10 +130,26 @@ export default function Write() {
           handler={(e) => handleChangeValue(e, setTag)}
         />
       </label>
-      <div className='flex gap-3'>
+      <div className='flex gap-2'>
         <div className='font-neb text-grey-text text-xl grow'>구매 방식</div>
-        <Button title='개인' items='blueSmall' />
-        <Button title='공동구매' items='blueSmall' />
+        <Button
+          width='w-20'
+          height='h-8'
+          font='font-neb'
+          color='bg-blue-primary'
+          fontSize='text-xs'
+        >
+          개인
+        </Button>
+        <Button
+          width='w-20'
+          height='h-8'
+          font='font-neb'
+          color='bg-blue-primary'
+          fontSize='text-xs'
+        >
+          공동구매
+        </Button>
       </div>
       <label className='font-neb text-grey-text text-xl'>
         가격
@@ -150,7 +171,36 @@ export default function Write() {
           handler={(e) => handleChangeValue(e, setCurrentFund)}
         />
       </label>
-      <div className='font-neb text-grey-text text-xl'>저금 계획 주기</div>
+      <div className='font-neb text-grey-text text-xl'>
+        저금 계획 주기
+        <div className='flex gap-2'>
+          <Button
+            width='w-32'
+            height='h-8'
+            font='font-neb'
+            color='bg-blue-primary'
+            fontSize='text-xs'
+          >
+            매일
+          </Button>
+          <Dropdown
+            list={['매주', '월', '화', '수']}
+            borderless={true}
+            width='w-32'
+            filled={true}
+            setState={setCheck}
+            radio={check === 'Weekly'}
+          />
+          <Dropdown
+            list={['매월', '매월 1일', '매월 5일', '매월 15일']}
+            borderless={true}
+            width='w-32'
+            filled={true}
+            setState={setCheck}
+            radio={false}
+          />
+        </div>
+      </div>
       <label className='font-neb text-grey-text text-xl'>
         저금 단위 금액
         <Input
@@ -168,8 +218,17 @@ export default function Write() {
       <div className='font-neb text-grey-text text-[15px] self-center'>
         <span className='text-red-text'>{calculatedDay()}</span> 일 뒤에 구매할 수 있어요 !
       </div>
-      <div className='mt-2 self-center'>
-        <Button title='등록하기' icon='plus' items='blueLarge' />
+      <div className='mt-2 self-center w-full'>
+        <Button
+          width='w-full'
+          height='h-12'
+          font='font-neb'
+          color='bg-blue-primary'
+          fontSize='text-xs'
+          icon='plus'
+        >
+          등록하기
+        </Button>
       </div>
     </div>
   );
