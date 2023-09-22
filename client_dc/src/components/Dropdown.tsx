@@ -2,17 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import DownArrow from '~/image/arrowDown.svg';
-import DarkDownArrow from '~/image/downArrowDark.svg';
-import WhiteDownArrow from '~/image/whiteDownArrow.svg';
+import { arrowDown, downArrowDark, whiteDownArrow } from '~/image';
 
 type Props = {
-  list: number[] | string[];
+  list: string[];
   prevIcon?: boolean;
   borderless?: boolean;
   filled?: boolean;
   width: string;
-  setState: React.Dispatch<React.SetStateAction<number | string>>;
+  setState: React.Dispatch<React.SetStateAction<string>>;
 };
 
 /** using example */
@@ -63,7 +61,7 @@ export default function Dropdown({ list, prevIcon, borderless, filled, width, se
 
   return (
     <div
-      className={`relative font-neb text-xs rounded-lg origin-top text-blue-primary ${
+      className={`relative bg-white font-neb text-xs rounded-lg origin-top text-blue-primary ${
         clickDropdown && 'rounded-b-none'
       } ${width && width} ${showShadow ? 'animate-show-shadow' : ''}`}
       onClick={() => setClickDropdown(!clickDropdown)}
@@ -76,7 +74,7 @@ export default function Dropdown({ list, prevIcon, borderless, filled, width, se
       >
         <div className='flex h-7 items-center justify-center'>{list[selectedIdx]}</div>
         <Image
-          src={filled ? WhiteDownArrow : clickDropdown ? DarkDownArrow : DownArrow}
+          src={filled ? whiteDownArrow : clickDropdown ? downArrowDark : arrowDown}
           className={`absolute top-1/2 -translate-y-1/2 ${prevIcon ? 'left-2' : 'right-2'}`}
           width={20}
           height={20}
@@ -87,7 +85,7 @@ export default function Dropdown({ list, prevIcon, borderless, filled, width, se
       <div
         className={`${showOptions ? 'block' : 'hidden'}  ${
           showShadow ? 'animate-show-shadow' : ''
-        } ${width && width} absolute z-30 border rounded-lg border-t-0 rounded-t-none origin-top ${
+        } w-full absolute z-30 border rounded-lg border-t-0 rounded-t-none origin-top ${
           filled ? 'bg-grey-text border-grey-text' : 'bg-white border-blue-primary'
         } ${clickDropdown ? 'animate-ease-down' : 'animate-ease-up'}`}
       >
