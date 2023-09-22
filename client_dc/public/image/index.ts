@@ -10,3 +10,4 @@ export { default as refresh } from './refresh.svg';
 export { default as vercel } from './dashLine.svg';
 export { default as downArrowDark } from './downArrowDark.svg';
 export { default as arrowDown } from './arrowDown.svg';
+export { default as whiteDownArrow } from './whiteDownArrow.svg';

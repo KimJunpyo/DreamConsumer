@@ -5,3 +5,4 @@ export { default as Input } from './Input';
 export { default as NavBar } from './NavBar';
 export { default as ProgressBar } from './ProgressBar';
 export { default as Tag } from './Tag';
+export { default as Item } from './Item';
