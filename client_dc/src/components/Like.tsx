@@ -21,7 +21,7 @@ export default function Like({ handler }: LikeProps) {
   };
   return (
     <div onClick={handleClick}>
-      <LikeIcon isLike={click ? 'yellow' : 'grey'} />
+      <LikeIcon isLike={click} />
     </div>
   );
 }
