@@ -31,7 +31,7 @@ export default function Items({ editValue }: ItemsProps) {
       <div className='w-2/3 flex flex-col justify-between'>
         <div className='flex items-center mb-1'>
           <div className='mr-1'>
-            <Like />
+            <Like islike={true} />
           </div>
           <div className='relative'>
             <Label group='member' />
