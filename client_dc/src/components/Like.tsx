@@ -12,14 +12,16 @@ export default function Like({ handler }: LikeProps) {
   const change = () => {
     setClick(!click);
   };
+
+  const handleClick = (e: React.MouseEvent) => {
+    change();
+    if (handler) {
+      handler(e);
+    }
+  };
   return (
-    <div
-      onClick={() => {
-        change();
-        handler;
-      }}
-    >
-      <LikeIcon color={click ? 'yellow' : 'grey'} />
+    <div onClick={handleClick}>
+      <LikeIcon isLike={click ? 'yellow' : 'grey'} />
     </div>
   );
 }

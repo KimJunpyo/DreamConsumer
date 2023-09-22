@@ -2,31 +2,31 @@ import Like from '@/components/Like';
 import Tags from '@/components/Tag';
 import Label from '@/app/main/_components/label';
 import CircleChart from './CircleChart';
-import { useRecoilValue } from 'recoil';
-import { clickEdit } from '@/recoil/atoms';
 import { CheckCircle } from '@/components';
 import { useState } from 'react';
 
-export default function Items() {
-  const editClick = useRecoilValue(clickEdit);
+interface ItemsProps {
+  editValue: boolean;
+}
+
+export default function Items({ editValue }: ItemsProps) {
   const [checkCricle, setCheckCricle] = useState(false);
   const cricleCheck = () => {
     setCheckCricle(!checkCricle);
   };
 
-  // editClick값이 true 일때 체크박스 나오게하기
-  // editClick값이 true 이면 겉에 게시물을 눌렀을 때 CheckCircle값이 ture
+  const handleClick = () => {
+    if (editValue) {
+      cricleCheck();
+    }
+  };
 
   return (
     <div
       className={`relative flex justify-between w-11/12 max-h-60 border-2 ${
-        checkCricle && editClick ? 'border-red-primary' : 'border-grey-border'
+        checkCricle && editValue ? 'border-red-primary' : 'border-grey-border'
       }  rounded-xl px-6 py-4 mb-2`}
-      onClick={() => {
-        if (editClick) {
-          cricleCheck();
-        }
-      }}
+      onClick={handleClick}
     >
       <div className='w-2/3 flex flex-col justify-between'>
         <div className='flex items-center mb-1'>
@@ -53,7 +53,7 @@ export default function Items() {
         <CircleChart percent={80} />
       </div>
       <div className='absolute right-2 top-2'>
-        {editClick ? (
+        {editValue ? (
           <div>
             <CheckCircle color='#FF8585' check={checkCricle} />
           </div>

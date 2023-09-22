@@ -1,34 +1,30 @@
-import { clickEdit } from '@/recoil/atoms';
-import { useRecoilState } from 'recoil';
-
 import EditImg from '@/components/EditImg';
 
 interface EditProps {
   marginRight?: string;
+  value: boolean;
   handler?: (e: React.MouseEvent) => void;
 }
 
-export default function Edit({ marginRight, handler }: EditProps) {
-  const [editClick, setEidtClick] = useRecoilState(clickEdit);
-  const change = () => {
-    setEidtClick(!editClick);
+export default function Edit({ marginRight, value, handler }: EditProps) {
+  const handleClick = (e: React.MouseEvent) => {
+    if (handler) {
+      handler(e);
+    }
   };
 
   return (
     <div
       className={`${
-        editClick ? 'bg-grey-text text-white' : 'text-blue-primary'
+        value ? 'bg-grey-text text-white' : 'text-blue-primary'
       }  py-[2px] px-2 rounded-xl flex items-center justify-between font-neb text-xs  ${
         marginRight && marginRight
       }
       }`}
-      onClick={() => {
-        change();
-        handler;
-      }}
+      onClick={handleClick}
     >
       <div className='flex items-center'>
-        <EditImg />
+        <EditImg value={value} />
         편집
       </div>
     </div>

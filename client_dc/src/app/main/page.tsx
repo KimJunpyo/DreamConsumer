@@ -6,30 +6,27 @@ import Search from './_components/Search';
 import Edit from '@/components/Edit';
 import Pagination from './_components/Pagination';
 import { Button } from '@/components';
-import { useRouter } from 'next/navigation';
 
-import { useRecoilValue } from 'recoil';
-import { clickEdit } from '@/recoil/atoms';
+import Link from 'next/link';
 
 export default function Main() {
-  const router = useRouter();
-  const writeRouter = () => {
-    router.push('/write');
-  };
-
   const [data, setData] = useState([1, 2, 3, 4, 5, 6, 7]);
   const [postsPerPage, setPostsPerPage] = useState(3);
   const [curruntPage, setCurruntPage] = useState(1);
+  const [clickEdit, setClickEdit] = useState(false);
+
   const offset = (curruntPage - 1) * postsPerPage;
   const totalPosts = data.slice(offset, offset + postsPerPage).map((el, idx) => {
-    return <Items key={idx} />;
+    return <Items key={idx} editValue={clickEdit} />;
   });
 
   function setPage(page: number) {
     setCurruntPage(page);
   }
 
-  const editValue = useRecoilValue(clickEdit);
+  const handleEditClick = () => {
+    setClickEdit(!clickEdit);
+  };
 
   return (
     <div className=' flex flex-col justify-between items-center' style={{ height: '75vh' }}>
@@ -37,7 +34,9 @@ export default function Main() {
       <div className='flex items-center justify-between w-10/12 mt-12 mb-5'>
         <p className='font-neb text-base text-grey-text'>생성된 목표</p>
         <div className='flex items-center justify-between font-neb text-xs text-blue-primary'>
-          <Edit marginRight={'mr-2'} />
+          <div onClick={handleEditClick}>
+            <Edit marginRight={'mr-2'} value={clickEdit} />
+          </div>
           <div>전체 정렬</div>
         </div>
       </div>
@@ -51,7 +50,7 @@ export default function Main() {
         />
       </div>
 
-      {editValue ? (
+      {clickEdit ? (
         <div className='w-full fixed bottom-14 flex justify-center'>
           <Button
             font='font-neb'
@@ -65,7 +64,7 @@ export default function Main() {
           </Button>
         </div>
       ) : (
-        <div className='fixed bottom-14 right-5'>
+        <Link href={'/write'} className='fixed bottom-14 right-5'>
           <Button
             font='font-neb'
             width='w-36'
@@ -73,11 +72,10 @@ export default function Main() {
             color='bg-blue-primary'
             fontSize='text-xl'
             icon='plus'
-            handler={writeRouter}
           >
             등록하기
           </Button>
-        </div>
+        </Link>
       )}
     </div>
   );

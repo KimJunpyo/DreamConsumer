@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import DownArrow from '~/image/DownArrow.svg';
-import DarkDownArrow from '~/image/DarkDownArrow.svg';
+import DownArrow from '~/image/arrowDown.svg';
+import DarkDownArrow from '~/image/downArrowDark.svg';
 import WhiteDownArrow from '~/image/whiteDownArrow.svg';
 
 type Props = {
