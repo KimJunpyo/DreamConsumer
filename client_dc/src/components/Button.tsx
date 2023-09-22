@@ -4,6 +4,7 @@
 // font를 입력하지 않으면 기본값으로 font-nl이 들어갑니다.
 // fontSize값을 입력하지 않으면 기본값으로 xs(0.75rem, 12px) 이 들어갑니다.
 // color값을 입력하지 않으면 기본값으로 gray색이 들어갑니다.
+// rounded값을 입력하지 않으면 기본값으로 rounded-xl크기가 들어갑니다.
 
 'use client';
 
@@ -19,6 +20,7 @@ interface ButtonProps {
   font: string;
   fontSize?: string;
   color?: string;
+  rounded?: string;
   icon?: 'delete' | 'plus' | 'refresh';
   handler?: (e: React.MouseEvent) => void;
 }
@@ -37,6 +39,7 @@ export default function Button({
   color,
   fontSize,
   font,
+  rounded,
   handler,
 }: ButtonProps) {
   const IconImage = icon ? ICONS[icon] : null;
@@ -47,7 +50,7 @@ export default function Button({
         height ? height : 'h-full'
       } ${color ? color : 'bg-grey-cancel'} ${fontSize ? fontSize : 'text-xs'} ${
         font ? font : 'font-nl'
-      } text-white rounded-xl`}
+      } text-white ${rounded ? rounded : 'rounded-xl'} `}
       onClick={handler}
     >
       {IconImage && <Image src={IconImage} alt={icon || ''} className='mr-2' />}
