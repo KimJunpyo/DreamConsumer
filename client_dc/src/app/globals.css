@@ -40,3 +40,23 @@
 input[type='password'] {
   font-family: 'Malgun gothic', dotum, sans-serif;
 }
+
+@layer utilities {
+  .triangle-white-top {
+    width: 0;
+    height: 0;
+    border-bottom: 9px solid white;
+    border-top: 9px solid transparent;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+  }
+
+  .triangle-red-bottom {
+    width: 0;
+    height: 0;
+    border-bottom: 7px solid transparent;
+    border-top: 7px solid #ff0101;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  }
+}
