@@ -17,7 +17,7 @@ interface ButtonProps {
   children: string;
   width?: string;
   height?: string;
-  font: string;
+  font?: string;
   fontSize?: string;
   color?: string;
   rounded?: string;
