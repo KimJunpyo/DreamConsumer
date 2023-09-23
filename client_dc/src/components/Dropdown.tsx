@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import DownArrow from '~/image/DownArrow.svg';
-import DarkDownArrow from '~/image/DarkDownArrow.svg';
+import DownArrow from '~/image/arrowDown.svg';
+import DarkDownArrow from '~/image/downArrowDark.svg';
 import WhiteDownArrow from '~/image/whiteDownArrow.svg';
 
 type Props = {
@@ -13,6 +13,7 @@ type Props = {
   filled?: boolean;
   width: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
+  handler?: () => void;
   radio?: boolean;
 };
 
@@ -43,6 +44,7 @@ export default function Dropdown({
   filled,
   width,
   setState,
+  handler,
   radio,
 }: Props) {
   const [clickDropdown, setClickDropdown] = useState<boolean>(false);
@@ -74,7 +76,10 @@ export default function Dropdown({
   }, [clickDropdown]);
 
   useEffect(() => {
-    setSelectedIdx(0);
+    if (!radio) {
+      setClickDropdown(false);
+      setSelectedIdx(0);
+    }
   }, [radio]);
 
   return (
@@ -82,9 +87,10 @@ export default function Dropdown({
       className={`relative font-neb text-xs rounded-lg origin-top text-blue-primary ${
         clickDropdown && 'rounded-b-none'
       } ${width && width} ${showShadow ? 'animate-show-shadow' : ''}`}
+      onClick={handler}
     >
       <div
-        className={`duration-100 border border-blue-primary rounded-lg relative ${
+        className={`duration-100 h-full border border-blue-primary rounded-lg relative ${
           radio && 'bg-grey-text'
         } ${clickDropdown ? 'border-b-transparent rounded-b-none text-grey-text ' : ''}
          ${borderless ? borderlessClass : ''} ${filled ? filledClass : ''}`}
@@ -92,7 +98,7 @@ export default function Dropdown({
           setClickDropdown(!clickDropdown);
         }}
       >
-        <div className='flex h-7 items-center justify-center'>
+        <div className='flex h-full items-center justify-center'>
           {selectedIdx === 0 ? list[0] : list[selectedIdx]}
         </div>
         <Image
