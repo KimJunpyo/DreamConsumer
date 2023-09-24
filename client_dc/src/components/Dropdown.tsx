@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import DownArrow from '~/image/arrowDown.svg';
-import DarkDownArrow from '~/image/downArrowDark.svg';
-import WhiteDownArrow from '~/image/whiteDownArrow.svg';
+import { arrowDown, downArrowDark, whiteDownArrow } from '~/image';
 
 type Props = {
   list: string[];
@@ -84,7 +82,7 @@ export default function Dropdown({
 
   return (
     <div
-      className={`relative font-neb text-xs rounded-lg origin-top text-blue-primary ${
+      className={`relative bg-white font-neb text-xs rounded-lg origin-top text-blue-primary ${
         clickDropdown && 'rounded-b-none'
       } ${width && width} ${showShadow ? 'animate-show-shadow' : ''}`}
       onClick={handler}
@@ -102,7 +100,7 @@ export default function Dropdown({
           {selectedIdx === 0 ? list[0] : list[selectedIdx]}
         </div>
         <Image
-          src={filled ? WhiteDownArrow : clickDropdown ? DarkDownArrow : DownArrow}
+          src={filled ? whiteDownArrow : clickDropdown ? downArrowDark : arrowDown}
           className={`absolute top-1/2 -translate-y-1/2 ${prevIcon ? 'left-2' : 'right-2'}`}
           width={20}
           height={20}
