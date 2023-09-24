@@ -4,6 +4,12 @@ export const COMMON_BUTTON_PROPS = {
   fontSize: 'text-xs',
 };
 
+export const CLICKED_BUTTON_PROPS = {
+  font: 'font-neb',
+  color: 'bg-grey-text',
+  fontSize: 'text-xs',
+};
+
 export const COMMON_DROPDOWN_PROPS = {
   borderless: true,
   width: 'w-32',
@@ -28,3 +34,11 @@ export const DROPDOWN_LIST = {
   WEEKLY: ['매주', '월', '화', '수'],
   MONTHLY: ['매월', '매월 1일', '매월 5일', '매월 15일'],
 };
+
+export const MONTH = 12;
+
+export const WEEK = 4;
+
+export const YEAR_TO_DAY = 365;
+
+export const MONTH_TO_DAY = 30;

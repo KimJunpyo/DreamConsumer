@@ -2,40 +2,44 @@
 
 import Input from '@/components/Input';
 import RightArrow from '~/image/rightArrow.svg';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { Button } from '@/components';
 import Checkbox from '@/components/Checkbox';
-import BlankImage from '~/image/blankImage.png';
 import Dropdown from '@/components/Dropdown';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { writeDropdownRadio } from '@/recoil/atoms';
 import {
-  COMMON_BUTTON_PROPS,
   COMMON_DROPDOWN_PROPS,
   COMMON_INPUT_PROPS,
   DROPDOWN_LIST,
+  MONTH,
+  MONTH_TO_DAY,
   PLACEHOLDER_MESSAGE,
+  WEEK,
+  YEAR_TO_DAY,
 } from './_util/constants';
+import { write } from './_util/api';
+import { divideDate, openLink, openNaverShop, removeComma } from './_util/functions';
+import ImageBox from './_components/ImageBox';
+import Label from './_components/Label';
+import WriteButton from './_components/WriteButton';
+import useInputChange from './_hooks/useInputChange';
+import useAutoLiftUp from './_hooks/useAutoLiftUp';
 
 export default function Write() {
-  const [productName, setProductName] = useState<string>('');
-  const [productLink, setProductLink] = useState<string>('');
-  const [tag, setTag] = useState<string>('');
-  const [productPrice, setProductPrice] = useState<string>('');
-  const [currentFund, setCurrentFund] = useState<string>('');
-  const [savingsUnit, setSavingsUnit] = useState<string>('');
-  const [autoSavings, setAutoSavings] = useState<boolean>(false);
-  const [imageFile, setImageFile] = useState<File | null>();
-  const [preview, setPreview] = useState<string | null>();
-  const [check, setCheck] = useState<string>('');
-
   const setCheckRadio = useSetRecoilState(writeDropdownRadio);
   const checkRadio = useRecoilValue(writeDropdownRadio);
 
-  const dynamicButtonProps = (width: string, height: string) => {
-    return { ...COMMON_BUTTON_PROPS, width, height };
-  };
+  const [itemName, setItemName] = useInputChange('', false);
+  const [itemUrl, setItemUrl] = useInputChange('', false);
+  const [tag, setTag, directSetTag] = useInputChange('', false, true);
+  const [groupPurchase, setGroupPurchase] = useState<boolean>(false);
+  const [itemPrice, setItemPrice] = useInputChange('', true);
+  const [currentMoney, setCurrentMoney] = useInputChange('', true);
+  const [unitAmount, setUnitAmount] = useInputChange('', true);
+  const [autoUpdate, setAutoUpdate] = useState<boolean>(false);
+  const [imageUrl, setImageUrl] = useState<string | null | undefined>();
+  const [cycle, setCycle] = useState<string>(checkRadio);
 
   const dynamicDropdownProps = (
     setState: React.Dispatch<React.SetStateAction<string>>,
@@ -64,213 +68,170 @@ export default function Write() {
     };
   };
 
-  const handleChangeString = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    setState(e.target.value);
-  };
-
-  const handleChangeValue = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    const value = e.target.value;
-    const numberValue = Number(value.replaceAll(',', ''));
-
-    if (isNaN(numberValue)) {
-      setState(e.target.value);
-      return;
-    }
-    const stringValue = numberValue.toLocaleString('ko-KR');
-    setState(stringValue);
-  };
-
   const calculatedDay = () => {
-    const numberProductPrice = removeComma(productPrice);
-    const numberCurrentFund = removeComma(currentFund);
-    const numberSavingsUnit = removeComma(savingsUnit);
+    const numberItemPrice = removeComma(itemPrice);
+    const numberCurrentMoney = removeComma(currentMoney);
+    const numberUnitAmount = removeComma(unitAmount);
 
-    if (numberProductPrice >= 0 && numberCurrentFund >= 0 && numberSavingsUnit >= 0) {
-      const value = Math.ceil((numberProductPrice - numberCurrentFund) / numberSavingsUnit);
+    if (numberItemPrice > 0 && numberCurrentMoney >= 0 && numberUnitAmount > 0) {
+      const value = Math.ceil((numberItemPrice - numberCurrentMoney) / numberUnitAmount);
 
-      if (checkRadio === 'Monthly') {
-        if (value > 12) {
-          return Math.floor(value / 12) + '년 ' + (value % 12 !== 0 ? (value % 12) + '개월 ' : '');
-        }
-      }
-      if (checkRadio === 'Weekly') {
-        if (value > 4) {
-          if (value > 48) {
-            const newValue = Math.floor(value / 48);
-            const new2Value = Math.floor((value % 48) / 4);
-            const new3Value = (value % 48) % 4;
-            return (
-              newValue +
-              '년 ' +
-              (new2Value !== 0 ? new2Value + '개월 ' : '') +
-              (new3Value !== 0 ? new3Value + '주 ' : '')
-            );
+      let years = 0;
+      let months = 0;
+      let weeks = 0;
+      let days = 0;
+
+      switch (checkRadio) {
+        case 'Monthly':
+          {
+            let result = divideDate(value, MONTH);
+            years = result.date;
+            months = result.remain;
           }
-          const newValue = Math.floor(value / 4);
-          const newValue2 = value % 4;
+          break;
+        case 'Weekly':
+          {
+            let result = divideDate(value, WEEK * MONTH);
+            years = result.date;
 
-          return newValue + '개월 ' + (newValue2 !== 0 ? newValue2 + '주 ' : '');
-        }
+            result = divideDate(result.remain, WEEK);
+            months = result.date;
+            weeks = result.remain;
+          }
+          break;
+        case 'Daily':
+          {
+            let result = divideDate(value, YEAR_TO_DAY);
+            years = result.date;
+
+            result = divideDate(result.remain, MONTH_TO_DAY);
+            months = result.date;
+
+            result = divideDate(result.remain, 7);
+            weeks = result.date;
+            days = result.remain;
+          }
+          break;
+        default:
+          return 'OOO';
       }
-      return value + checkRadio;
+
+      return `${years ? years + '년 ' : ''}${months ? months + '개월 ' : ''}${
+        weeks ? weeks + '주 ' : ''
+      }${days ? days + '일 ' : ''}`;
     }
-    return 'OOO';
+    return 'OOO 일';
   };
 
-  const removeComma = (state: string) => {
-    if (state === '') {
-      return -1;
-    }
-    return Number(state.replaceAll(',', ''));
+  const register = async () => {
+    const tagged = tag
+      .split(',')
+      .map((item) => item.trim().replace(/\s+/g, ' '))
+      .filter((item) => item !== '');
+
+    directSetTag?.(tagged.toString());
+
+    const data = {
+      itemName,
+      imageUrl,
+      price: removeComma(itemPrice),
+      tags: tagged,
+      currentMoney: removeComma(currentMoney),
+      cycle,
+      unitAmount: removeComma(unitAmount),
+      autoUpdate,
+      groupPurchase,
+      itemURL: itemUrl,
+      lowerPriceSearch: false,
+    };
+
+    console.log(data);
+    await write(data);
   };
 
-  const openLink = () => {
-    if (productLink) {
-      window.open(productLink);
-      return;
-    }
-    alert('입력하세요잉');
-  };
-
-  const openNaverShop = () => {
-    if (productName) {
-      window.open(`https://search.shopping.naver.com/search/all?query=${productName}`);
-    }
-  };
-
-  const saveImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files !== null) {
-      const file = e.target.files[0];
-      if (file && file.type.substring(0, 5) === 'image') {
-        setImageFile(file);
-        return;
-      }
-      setImageFile(null);
-    }
-  };
-
-  useEffect(() => {
-    if (imageFile) {
-      const file = new FileReader();
-      file.onloadend = () => {
-        setPreview(file.result as string);
-      };
-      file.readAsDataURL(imageFile);
-      return;
-    }
-    setPreview(null);
-  }, [imageFile]);
+  useAutoLiftUp();
 
   return (
     <div className='flex flex-col my-4 mx-6 gap-2'>
-      <form method='post' encType='multipart/form-data'>
-        <label
-          htmlFor='imageUpload'
-          className='overflow-hidden flex gap-3 justify-center text-[15px] font-neb items-center h-64 border border-grey-border border-dashed text-grey-border rounded-2xl'
-        >
-          {preview ? (
-            <img className='object-cover w-full h-full' src={preview} alt='preview' />
-          ) : (
-            <>
-              <Image src={BlankImage} alt='blank image' />
-              <span>이미지 등록</span>
-            </>
-          )}
-        </label>
-        <input
-          className='hidden'
-          type='file'
-          accept='image/*'
-          id='imageUpload'
-          name='imageUpload'
-          onChange={saveImageFile}
-        />
-      </form>
-      <label className='font-neb text-grey-text text-xl'>
+      <ImageBox imageUrl={imageUrl} setImageUrl={setImageUrl} />
+      <Label>
         <div className='flex justify-between items-center'>
           <span>제품명</span>
           <span
             className='text-red-text text-xs border-b border-red-text'
             onClick={() => {
-              openNaverShop();
+              openNaverShop(itemName);
             }}
           >
             최저가 검색하기
           </span>
         </div>
-        <Input
-          {...dynamicInputProps(PLACEHOLDER_MESSAGE.PRODUCT_NAME, productName, (e) =>
-            handleChangeString(e, setProductName)
-          )}
-        />
-      </label>
-      <label className='font-neb text-grey-text text-xl'>
+        <Input {...dynamicInputProps(PLACEHOLDER_MESSAGE.PRODUCT_NAME, itemName, setItemName)} />
+      </Label>
+      <Label>
         구매 링크
         <div className='flex gap-2'>
-          <Input
-            {...dynamicInputProps(PLACEHOLDER_MESSAGE.PRODUCT_LINK, productLink, (e) =>
-              handleChangeString(e, setProductLink)
-            )}
-          />
-          <Image className='' src={RightArrow} alt='arrow' onClick={openLink} />
+          <Input {...dynamicInputProps(PLACEHOLDER_MESSAGE.PRODUCT_LINK, itemUrl, setItemUrl)} />
+          <Image className='' src={RightArrow} alt='arrow' onClick={() => openLink(itemUrl)} />
         </div>
-      </label>
-      <label className='font-neb text-grey-text text-xl'>
+      </Label>
+      <Label>
         태그
-        <Input
-          {...dynamicInputProps(PLACEHOLDER_MESSAGE.TAG, tag, (e) => handleChangeString(e, setTag))}
-        />
-      </label>
+        <Input {...dynamicInputProps(PLACEHOLDER_MESSAGE.TAG, tag, setTag)} />
+      </Label>
       <div className='flex gap-2'>
         <div className='font-neb text-grey-text text-xl grow'>구매 방식</div>
-        <Button {...dynamicButtonProps('w-20', 'h-8')}>개인</Button>
-        <Button {...dynamicButtonProps('w-20', 'h-8')}>공동구매</Button>
+        <WriteButton
+          click={!groupPurchase}
+          width='w-20'
+          height='h-8'
+          handler={() => setGroupPurchase(false)}
+        >
+          개인
+        </WriteButton>
+        <WriteButton
+          click={groupPurchase}
+          width='w-20'
+          height='h-8'
+          handler={() => setGroupPurchase(true)}
+        >
+          공동구매
+        </WriteButton>
       </div>
-      <label className='font-neb text-grey-text text-xl'>
+      <Label>
         가격
-        <Input
-          {...dynamicInputProps(PLACEHOLDER_MESSAGE.PRODUCT_PRICE, productPrice, (e) =>
-            handleChangeValue(e, setProductPrice)
-          )}
-        />
-      </label>
-      <label className='font-neb text-grey-text text-xl'>
+        <Input {...dynamicInputProps(PLACEHOLDER_MESSAGE.PRODUCT_PRICE, itemPrice, setItemPrice)} />
+      </Label>
+      <Label>
         보유 자금
         <Input
-          {...dynamicInputProps(PLACEHOLDER_MESSAGE.CURRENT_FUND, currentFund, (e) =>
-            handleChangeValue(e, setCurrentFund)
-          )}
+          {...dynamicInputProps(PLACEHOLDER_MESSAGE.CURRENT_FUND, currentMoney, setCurrentMoney)}
         />
-      </label>
+      </Label>
       <div className='font-neb text-grey-text text-xl'>
         저금 계획 주기
         <div className='flex gap-2'>
-          <Button {...dynamicButtonProps('w-32', 'h-8')} rounded='rounded-lg'>
+          <WriteButton
+            click={checkRadio === 'Daily'}
+            width='w-32'
+            height='h-8'
+            rounded='rounded-lg'
+            handler={() => {
+              setCycle('Daily');
+              setCheckRadio('Daily');
+            }}
+          >
             매일
-          </Button>
-          <Dropdown {...dynamicDropdownProps(setCheck, DROPDOWN_LIST.WEEKLY, 'Weekly')} />
-          <Dropdown {...dynamicDropdownProps(setCheck, DROPDOWN_LIST.MONTHLY, 'Monthly')} />
+          </WriteButton>
+          <Dropdown {...dynamicDropdownProps(setCycle, DROPDOWN_LIST.WEEKLY, 'Weekly')} />
+          <Dropdown {...dynamicDropdownProps(setCycle, DROPDOWN_LIST.MONTHLY, 'Monthly')} />
         </div>
       </div>
-      <label className='font-neb text-grey-text text-xl'>
+      <Label>
         저금 단위 금액
-        <Input
-          {...dynamicInputProps(PLACEHOLDER_MESSAGE.SAVING_UNIT, savingsUnit, (e) =>
-            handleChangeValue(e, setSavingsUnit)
-          )}
-        />
-      </label>
-      <Checkbox
-        value={autoSavings}
-        inputName='autoPaid'
-        handler={() => setAutoSavings(!autoSavings)}
-      >
+        <Input {...dynamicInputProps(PLACEHOLDER_MESSAGE.SAVING_UNIT, unitAmount, setUnitAmount)} />
+      </Label>
+      <Checkbox value={autoUpdate} inputName='autoPaid' handler={() => setAutoUpdate(!autoUpdate)}>
         저금 금액 자동으로 업데이트 하기
       </Checkbox>
       <hr className='border border-grey-text' />
@@ -278,9 +239,9 @@ export default function Write() {
         <span className='text-red-text'>{calculatedDay()}</span> 뒤에 구매할 수 있어요 !
       </div>
       <div className='mt-2 self-center w-full'>
-        <Button {...dynamicButtonProps('w-full', 'h-12')} icon='plus'>
+        <WriteButton click={false} width='w-full' height='h-12' handler={register} icon='plus'>
           등록하기
-        </Button>
+        </WriteButton>
       </div>
     </div>
   );
