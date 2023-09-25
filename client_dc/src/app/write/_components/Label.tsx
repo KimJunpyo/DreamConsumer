@@ -1,12 +1,8 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { LabelProps } from '../_util/types';
 
-type Props = {
-  children: ReactNode;
-};
-
-const Label = ({ children }: Props) => {
+const Label = ({ children }: LabelProps) => {
   return <label className='font-neb text-grey-text text-xl'>{children}</label>;
 };
 

@@ -11,3 +11,22 @@ export type writeData = {
   itemURL: string;
   lowerPriceSearch: boolean;
 };
+
+export type ImageBoxProps = {
+  imageUrl: string | null | undefined;
+  setImageUrl: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+};
+
+export type LabelProps = {
+  children: React.ReactNode;
+};
+
+export type WriteButtonProps = {
+  children: string;
+  click: boolean;
+  width: string;
+  height: string;
+  rounded?: string;
+  icon?: string;
+  handler: () => void;
+};

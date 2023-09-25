@@ -3,13 +3,9 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import blankImage from '~/image/blankImage.png';
+import { ImageBoxProps } from '../_util/types';
 
-type Props = {
-  imageUrl: string | null | undefined;
-  setImageUrl: React.Dispatch<React.SetStateAction<string | null | undefined>>;
-};
-
-const ImageBox = ({ imageUrl, setImageUrl }: Props) => {
+const ImageBox = ({ imageUrl, setImageUrl }: ImageBoxProps) => {
   const [imageFile, setImageFile] = useState<File | null>();
 
   const saveImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {

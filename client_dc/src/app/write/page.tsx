@@ -4,8 +4,7 @@ import Input from '@/components/Input';
 import RightArrow from '~/image/rightArrow.svg';
 import { useState } from 'react';
 import Image from 'next/image';
-import Checkbox from '@/components/Checkbox';
-import Dropdown from '@/components/Dropdown';
+import { Checkbox, Dropdown } from '@/components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { writeDropdownRadio } from '@/recoil/atoms';
 import {
@@ -23,8 +22,8 @@ import { divideDate, openLink, openNaverShop, removeComma } from './_util/functi
 import ImageBox from './_components/ImageBox';
 import Label from './_components/Label';
 import WriteButton from './_components/WriteButton';
-import useInputChange from './_hooks/useInputChange';
-import useAutoLiftUp from './_hooks/useAutoLiftUp';
+import useInputChange from '../../hooks/useInputChange';
+import useAutoLiftUp from '../../hooks/useAutoLiftUp';
 
 export default function Write() {
   const setCheckRadio = useSetRecoilState(writeDropdownRadio);
