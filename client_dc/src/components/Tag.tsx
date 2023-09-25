@@ -5,11 +5,6 @@ interface TagProps {
   onDelete?: (id: string | number) => void;
 }
 
-interface TagProps {
-  children: string;
-  items: keyof typeof itemVariants;
-}
-
 const itemVariants = {
   redSmall:
     'inline-flex justify-center items-center px-2 py-1 bg-tag-red text-[0.5rem] text-white rounded-xl',
@@ -27,7 +22,6 @@ const itemVariants = {
     'inline-flex justify-center items-center px-5 py-2 bg-tag-purple text-base text-white rounded-full',
 };
 
-
 export default function Tags({ id, children, items, onDelete }: TagProps) {
   const deleteEvent = () => {
     if (id && onDelete) {
@@ -42,5 +36,4 @@ export default function Tags({ id, children, items, onDelete }: TagProps) {
       {onDelete && <span className='font-neb text-white ml-1 text-[0.5rem]'>x </span>}
     </div>
   );
-
 }

@@ -1,17 +1,33 @@
 import Image from 'next/image';
+import React, { useState } from 'react';
 import SearchImg from '~/image/search.svg';
 
 export default function Search() {
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log(searchValue);
+  };
+
   return (
-    <div
+    <form
       className='flex justify-center w-11/12 h-12  rounded-3xl shadow-lg absolute  top-16 bg-white
     '
+      action=''
+      onSubmit={handleSubmit}
     >
-      <Image src={SearchImg} alt='search' className='mr-2' />
+      <button type='submit'>
+        <Image src={SearchImg} alt='search' className='mr-2' />
+      </button>
       <input
+        value={searchValue}
+        onChange={(e) => {
+          setSearchValue(e.target.value);
+        }}
         placeholder='등록한 목표를 검색해보세요. #태그 #검색'
         className='w-9/12  font-nr text-sm placeholder-[#CECECE] outline-none '
       />
-    </div>
+    </form>
   );
 }

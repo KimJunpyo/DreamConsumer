@@ -3,16 +3,9 @@ import EditImg from '@/components/EditImg';
 interface EditProps {
   marginRight?: string;
   value: boolean;
-  handler?: (e: React.MouseEvent) => void;
 }
 
-export default function Edit({ marginRight, value, handler }: EditProps) {
-  const handleClick = (e: React.MouseEvent) => {
-    if (handler) {
-      handler(e);
-    }
-  };
-
+export default function Edit({ marginRight, value }: EditProps) {
   return (
     <div
       className={`${
@@ -21,12 +14,11 @@ export default function Edit({ marginRight, value, handler }: EditProps) {
         marginRight && marginRight
       }
       }`}
-      onClick={handleClick}
     >
-      <div className='flex items-center'>
+      <button className='flex items-center'>
         <EditImg value={value} />
         편집
-      </div>
+      </button>
     </div>
   );
 }

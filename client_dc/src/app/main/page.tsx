@@ -30,7 +30,10 @@ export default function Main() {
 
   return (
     <div className=' flex flex-col justify-between items-center' style={{ height: '75vh' }}>
-      <Search />
+      <div className='z-10 flex justify-center'>
+        <Search />
+      </div>
+
       <div className='flex items-center justify-between w-10/12 mt-12 mb-5'>
         <p className='font-neb text-base text-grey-text'>생성된 목표</p>
         <div className='flex items-center justify-between font-neb text-xs text-blue-primary'>
@@ -77,6 +80,7 @@ export default function Main() {
           </Button>
         </Link>
       )}
+      {/* <div className='fixed w-full h-screen bg-gray-400 opacity-80'></div> */}
     </div>
   );
 }
