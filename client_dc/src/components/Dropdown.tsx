@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { arrowDown, downArrowDark, whiteDownArrow } from '~/image';
+import { downArrow, darkDownArrow, whiteDownArrow } from '~/image';
 
 type Props = {
   list: string[];
@@ -100,7 +100,7 @@ export default function Dropdown({
           {selectedIdx === 0 ? list[0] : list[selectedIdx]}
         </div>
         <Image
-          src={filled ? whiteDownArrow : clickDropdown ? downArrowDark : arrowDown}
+          src={filled ? whiteDownArrow : clickDropdown ? darkDownArrow : downArrow}
           className={`absolute top-1/2 -translate-y-1/2 ${prevIcon ? 'left-2' : 'right-2'}`}
           width={20}
           height={20}
