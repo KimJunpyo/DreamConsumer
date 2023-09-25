@@ -30,7 +30,7 @@ export default function Tags({ id, children, items, onDelete }: TagProps) {
   };
 
   return (
-    <div className={`${itemVariants[items]} mr-1 flex items-center`} onClick={deleteEvent}>
+    <div className={`${itemVariants[items]} mr-1 mb-1 flex items-center`} onClick={deleteEvent}>
       {children}
 
       {onDelete && <span className='font-neb text-white ml-1 text-[0.5rem]'>x </span>}

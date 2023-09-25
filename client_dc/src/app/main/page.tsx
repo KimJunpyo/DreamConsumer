@@ -80,7 +80,6 @@ export default function Main() {
           </Button>
         </Link>
       )}
-      {/* <div className='fixed w-full h-screen bg-gray-400 opacity-80'></div> */}
     </div>
   );
 }
