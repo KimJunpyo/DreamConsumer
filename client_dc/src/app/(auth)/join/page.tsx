@@ -1,12 +1,12 @@
 'use client';
 
-import { Input, Checkbox, Button, Dropdown } from '@/components';
-import useForm from '@/hooks/useForm';
-import { validate } from './_util/validate';
-import { SIGN_UP_INPUT_LIST, JOB_LIST } from './_util/constants';
-import { useState, useMemo } from 'react';
 import type { SignUpError, SignUpValuesWithoutBooleans } from './_util/types';
+import useForm from '@/hooks/useForm';
 import SocialLogin from '../_components/SocialLogin';
+import { useState, useMemo } from 'react';
+import { Input, Checkbox, Button, Dropdown } from '@/components';
+import { SIGN_UP_INPUT_LIST, JOB_LIST } from './_util/constants';
+import { validate } from './_util/validate';
 import { generateRange } from '@/common/functions';
 import { join } from '../_util/api';
 
