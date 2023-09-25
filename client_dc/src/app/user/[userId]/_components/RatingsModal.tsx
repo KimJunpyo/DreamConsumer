@@ -7,7 +7,7 @@ type Props = {
 
 export default function RatingsModal({ rating }: Props) {
   return (
-    <div className='absolute w-[90vw] h-[5.5rem] bg-white rounded-2xl top-44 flex justify-around p-2'>
+    <div className='absolute w-[90vw] h-[5.5rem] bg-white rounded-2xl top-[10.5rem] flex justify-around p-2'>
       {RATING_LIST.map(({ image, ratingName, width }) => (
         <div key={ratingName} className='flex flex-col items-center'>
           <div className={`triangle-red-bottom ${rating !== ratingName && 'invisible'}`} />

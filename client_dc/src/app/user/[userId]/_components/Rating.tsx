@@ -11,7 +11,7 @@ export default function Rating() {
   return (
     <>
       <div
-        className='relative bg-white rounded-full w-14 h-14 flex items-center justify-center'
+        className='relative bg-white rounded-full w-14 min-w-[3.5rem] h-14 flex items-center justify-center'
         onClick={() => setShowModal(!showModal)}
       >
         <Image src={diamond} alt='회원 등급' width={24} />
