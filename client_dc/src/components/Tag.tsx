@@ -24,7 +24,7 @@ const itemVariants = {
 
 export default function Tags({ id, children, items, onDelete }: TagProps) {
   const deleteEvent = () => {
-    if (id !== undefined && onDelete) {
+    if (id && onDelete) {
       onDelete(id);
     }
   };
