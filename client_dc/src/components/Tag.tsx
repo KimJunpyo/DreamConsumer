@@ -1,7 +1,8 @@
-interface ButtonProps {
-  title?: string;
-  icon?: 'delete' | 'plus' | 'refresh';
+interface TagProps {
+  id?: string | number;
+  children: string;
   items: keyof typeof itemVariants;
+  onDelete?: (id: string | number) => void;
 }
 
 interface TagProps {
@@ -26,6 +27,20 @@ const itemVariants = {
     'inline-flex justify-center items-center px-5 py-2 bg-tag-purple text-base text-white rounded-full',
 };
 
-export default function Tags({ children, items }: TagProps) {
-  return <div className={`${itemVariants[items]} mr-1`}>{children}</div>;
+
+export default function Tags({ id, children, items, onDelete }: TagProps) {
+  const deleteEvent = () => {
+    if (id && onDelete) {
+      onDelete(id);
+    }
+  };
+
+  return (
+    <div className={`${itemVariants[items]} mr-1 flex items-center`} onClick={deleteEvent}>
+      {children}
+
+      {onDelete && <span className='font-neb text-white ml-1 text-[0.5rem]'>x </span>}
+    </div>
+  );
+
 }
