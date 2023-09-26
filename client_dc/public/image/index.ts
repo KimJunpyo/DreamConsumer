@@ -11,3 +11,8 @@ export { default as vercel } from './dashLine.svg';
 export { default as darkDownArrow } from './darkDownArrow.svg';
 export { default as downArrow } from './downArrow.svg';
 export { default as whiteDownArrow } from './whiteDownArrow.svg';
+export { default as myPage } from './myPage.svg';
+export { default as service } from './service.svg';
+export { default as darkMode } from './darkMode.svg';
+export { default as logOut } from './logOut.svg';
+export { default as back } from './back.svg';

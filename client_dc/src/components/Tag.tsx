@@ -22,7 +22,7 @@ const itemVariants = {
     'inline-flex justify-center items-center px-5 py-2 bg-tag-purple text-base text-white rounded-full',
 };
 
-export default function Tags({ id, children, items, onDelete }: TagProps) {
+export default function Tag({ id, children, items, onDelete }: TagProps) {
   const deleteEvent = () => {
     if (id && onDelete) {
       onDelete(id);
@@ -30,7 +30,7 @@ export default function Tags({ id, children, items, onDelete }: TagProps) {
   };
 
   return (
-    <div className={`${itemVariants[items]} mr-1 flex items-center`} onClick={deleteEvent}>
+    <div className={`${itemVariants[items]} mr-1 mb-1 flex items-center`} onClick={deleteEvent}>
       {children}
 
       {onDelete && <span className='font-neb text-white ml-1 text-[0.5rem]'>x </span>}
