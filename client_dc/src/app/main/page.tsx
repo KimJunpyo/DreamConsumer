@@ -1,13 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import Items from './_components/Items';
-import Search from './_components/Search';
-import Edit from '@/components/Edit';
-import Pagination from './_components/Pagination';
-import { Button } from '@/components';
 
-import Link from 'next/link';
+import { Search, Item, Pagination, Buttons } from './_components';
+import { Edit } from '@/components';
 
 export default function Main() {
   const [data, setData] = useState([1, 2, 3, 4, 5, 6, 7]);
@@ -17,7 +13,7 @@ export default function Main() {
 
   const offset = (curruntPage - 1) * postsPerPage;
   const totalPosts = data.slice(offset, offset + postsPerPage).map((el, idx) => {
-    return <Items key={idx} editValue={clickEdit} />;
+    return <Item key={idx} editValue={clickEdit} />;
   });
 
   function setPage(page: number) {
@@ -38,7 +34,7 @@ export default function Main() {
         <p className='font-neb text-base text-grey-text'>생성된 목표</p>
         <div className='flex items-center justify-between font-neb text-xs text-blue-primary'>
           <div onClick={handleEditClick}>
-            <Edit marginRight={'mr-2'} value={clickEdit} />
+            <Edit margin={'mr-2'} path='main' />
           </div>
           <div>전체 정렬</div>
         </div>
@@ -53,33 +49,7 @@ export default function Main() {
         />
       </div>
 
-      {clickEdit ? (
-        <div className='w-full fixed bottom-14 flex justify-center'>
-          <Button
-            font='font-neb'
-            width='w-10/12'
-            height='h-14'
-            color='bg-red-primary'
-            fontSize='text-xl'
-            icon='delete'
-          >
-            삭제하기
-          </Button>
-        </div>
-      ) : (
-        <Link href={'/write'} className='fixed bottom-14 right-5'>
-          <Button
-            font='font-neb'
-            width='w-36'
-            height='h-12'
-            color='bg-blue-primary'
-            fontSize='text-xl'
-            icon='plus'
-          >
-            등록하기
-          </Button>
-        </Link>
-      )}
+      <Buttons />
     </div>
   );
 }

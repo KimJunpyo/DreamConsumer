@@ -8,3 +8,4 @@ export { default as ProgressBar } from './ProgressBar';
 export { default as Tag } from './Tag';
 export { default as Item } from './Item';
 export { default as DeleteIcon } from './DeleteIcon';
+export { default as Edit } from './Edit';

@@ -5,11 +5,11 @@ import CircleChart from './CircleChart';
 import { CheckCircle } from '@/components';
 import { useState } from 'react';
 
-interface ItemsProps {
+interface ItemProps {
   editValue: boolean;
 }
 
-export default function Items({ editValue }: ItemsProps) {
+export default function Item({ editValue }: ItemProps) {
   const [checkCricle, setCheckCricle] = useState(false);
   const cricleCheck = () => {
     setCheckCricle(!checkCricle);
