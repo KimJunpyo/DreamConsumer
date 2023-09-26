@@ -16,3 +16,6 @@ export { default as service } from './service.svg';
 export { default as darkMode } from './darkMode.svg';
 export { default as logOut } from './logOut.svg';
 export { default as back } from './back.svg';
+export { default as dustbin } from './dustbin.svg';
+export { default as search } from './search.svg';
+export { default as warn } from './warn.svg';
