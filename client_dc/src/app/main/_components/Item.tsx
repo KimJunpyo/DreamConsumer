@@ -10,21 +10,18 @@ interface ItemProps {
 }
 
 export default function Item({ editValue }: ItemProps) {
-  const [checkCricle, setCheckCricle] = useState(false);
-  const cricleCheck = () => {
-    setCheckCricle(!checkCricle);
-  };
+  const [checkCircle, setCheckCircle] = useState(false);
 
   const handleClick = () => {
     if (editValue) {
-      cricleCheck();
+      setCheckCircle(!checkCircle);
     }
   };
 
   return (
     <div
       className={`relative flex justify-between w-11/12 max-h-60 border-2 ${
-        checkCricle && editValue ? 'border-red-primary' : 'border-grey-border'
+        checkCircle && editValue ? 'border-red-primary' : 'border-grey-border'
       }  rounded-xl px-6 py-4 mb-2`}
       onClick={handleClick}
     >
@@ -55,7 +52,7 @@ export default function Item({ editValue }: ItemProps) {
       <div className='absolute right-2 top-2'>
         {editValue ? (
           <div>
-            <CheckCircle color='#FF8585' check={checkCricle} />
+            <CheckCircle color='#FF8585' check={checkCircle} />
           </div>
         ) : null}
       </div>

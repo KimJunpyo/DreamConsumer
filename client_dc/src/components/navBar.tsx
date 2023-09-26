@@ -7,6 +7,7 @@ import Profile from '~/image/profile.svg';
 import NavMenu from './NavMenu';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Nav() {
   const [menuValue, setMenuValue] = useState(false);
@@ -26,7 +27,9 @@ export default function Nav() {
         </div>
         <div className='flex flex-row mr-3'>
           <Image src={Alarm} alt='menu' className='mr-1' />
-          <Image src={Profile} alt='menu' />
+          <Link href={'/user/1'}>
+            <Image src={Profile} alt='menu' />
+          </Link>
         </div>
       </div>
       <div>

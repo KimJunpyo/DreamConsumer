@@ -16,9 +16,9 @@ export default function Main() {
     return <Item key={idx} editValue={clickEdit} />;
   });
 
-  function setPage(page: number) {
+  const setPage = (page: number) => {
     setCurruntPage(page);
-  }
+  };
 
   const handleEditClick = () => {
     setClickEdit(!clickEdit);

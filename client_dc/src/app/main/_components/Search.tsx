@@ -18,11 +18,9 @@ export default function Search() {
   return (
     <>
       <form
-        className='flex justify-center w-11/12 h-12 rounded-3xl shadow-lg absolute  top-16 bg-white z-10
-    '
+        className='flex justify-center w-11/12 h-12 rounded-3xl shadow-lg absolute  top-16 bg-white z-10'
         action=''
         onSubmit={handleSubmit}
-        onClick={handleSearchClick}
       >
         <button type='submit'>
           <Image src={SearchImg} alt='search' className='mr-2' />
@@ -34,6 +32,7 @@ export default function Search() {
           }}
           placeholder='등록한 목표를 검색해보세요. #태그 #검색'
           className='w-9/12  font-nr text-sm placeholder-[#CECECE] outline-none '
+          onClick={handleSearchClick}
         />
       </form>
       {clickSearch && (
@@ -41,7 +40,7 @@ export default function Search() {
           className='fixed w-full h-screen bg-black bg-opacity-80 flex flex-col items-center justify-center'
           onClick={handleSearchClick}
         >
-          <p className='font-neb text-3xl text-white'>Tag 검색</p>
+          <p className='font-neb text-3xl text-white mb-20'>Tag 검색</p>
           <div className='w-11/12 flex flex-wrap justify-center'>
             <Tags items='redLarge'>#2024년</Tags>
             <Tags items='greenLarge'>#리조트</Tags>
