@@ -1,5 +1,4 @@
 'use client';
-
 import { mainEditState, dustbinEditState } from '@/recoil/atoms';
 import EditImg from '@/components/EditImg';
 import { useRecoilState } from 'recoil';
