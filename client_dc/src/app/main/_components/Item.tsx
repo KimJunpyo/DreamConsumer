@@ -1,8 +1,7 @@
-import Like from '@/components/Like';
-import Tags from '@/components/Tag';
-import Label from '@/app/main/_components/label';
+import Label from './label';
+
 import CircleChart from './CircleChart';
-import { CheckCircle } from '@/components';
+import { CheckCircle, Tag, BookMark } from '@/components';
 import { useState } from 'react';
 
 interface ItemProps {
@@ -28,7 +27,7 @@ export default function Item({ editValue }: ItemProps) {
       <div className='w-2/3 flex flex-col justify-between'>
         <div className='flex items-center mb-1'>
           <div className='mr-1'>
-            <Like islike={true} />
+            <BookMark islike={true} />
           </div>
           <div className='relative'>
             <Label group='member' />
@@ -40,9 +39,9 @@ export default function Item({ editValue }: ItemProps) {
         <div className=' font-neb text-grey-text text-xl mb-1 break-words'>제목</div>
         <div>
           {/* 인덱스 번호를 /3한 뒤 나머지에 따른 색 나오게 (나머지 1 == redSmall, 나머지 2 == greenSmall, 나머지 0 == purpleSmall) */}
-          <Tags items='redSmall'>#2024년</Tags>
-          <Tags items='greenSmall'>#리조트</Tags>
-          <Tags items='purpleSmall'>#연말</Tags>
+          <Tag items='redSmall'>#2024년</Tag>
+          <Tag items='greenSmall'>#리조트</Tag>
+          <Tag items='purpleSmall'>#연말</Tag>
         </div>
       </div>
       <div className='w-1/3'>

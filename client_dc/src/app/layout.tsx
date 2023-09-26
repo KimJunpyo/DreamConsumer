@@ -1,4 +1,4 @@
-import Nav from '@/components/navBar';
+import NavBar from '@/components/NavBar';
 import './globals.css';
 import type { Metadata } from 'next';
 
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='ko'>
       <body>
         <RootRecoil>
-          <Nav />
+          <NavBar />
           {children}
         </RootRecoil>
       </body>

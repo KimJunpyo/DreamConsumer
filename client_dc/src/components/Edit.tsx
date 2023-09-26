@@ -1,20 +1,21 @@
 'use client';
 import { mainEditState, dustbinEditState } from '@/recoil/atoms';
-import EditImg from '@/components/EditImg';
 import { useRecoilState } from 'recoil';
+
+import { EditImg } from '.';
 
 interface EditProps {
   margin?: string;
   path: 'main' | 'dustbin';
 }
 
-const mappedAtom = {
+const MAPPED_ATOM = {
   main: mainEditState,
   dustbin: dustbinEditState,
 };
 
 export default function Edit({ margin, path }: EditProps) {
-  const [editMode, setEditMode] = useRecoilState(mappedAtom[path]);
+  const [editMode, setEditMode] = useRecoilState(MAPPED_ATOM[path]);
 
   return (
     <div

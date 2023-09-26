@@ -22,7 +22,7 @@ const itemVariants = {
     'inline-flex justify-center items-center px-5 py-2 bg-tag-purple text-base text-white rounded-full',
 };
 
-export default function Tags({ id, children, items, onDelete }: TagProps) {
+export default function Tag({ id, children, items, onDelete }: TagProps) {
   const deleteEvent = () => {
     if (id && onDelete) {
       onDelete(id);

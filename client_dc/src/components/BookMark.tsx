@@ -6,7 +6,7 @@ interface LikeProps {
   islike: boolean;
 }
 
-export default function Like({ islike }: LikeProps) {
+export default function BookMark({ islike }: LikeProps) {
   return (
     <div>
       <LikeIcon isLike={islike} />
