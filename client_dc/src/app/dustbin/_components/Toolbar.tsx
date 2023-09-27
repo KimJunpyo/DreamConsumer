@@ -21,7 +21,7 @@ export default function Toolbar() {
   return (
     <div className='flex justify-between items-center px-5 mt-7'>
       <Search />
-      <div className='flex'>
+      <div className='flex items-center'>
         <Edit path='dustbin' />
         <Dropdown
           list={SORT_OPTIONS_KO}
@@ -29,6 +29,7 @@ export default function Toolbar() {
           width='w-[5.5rem]'
           prevIcon
           borderless
+          rightSort
         />
       </div>
     </div>

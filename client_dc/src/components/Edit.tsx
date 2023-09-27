@@ -33,10 +33,10 @@ export default function Edit({ margin, path }: EditProps) {
     <div
       className={`${
         editMode ? 'bg-grey-text text-white' : 'text-blue-primary'
-      }  py-[2px] px-2 rounded-xl flex items-center justify-between font-neb text-xs  ${
+      } py-[2px] px-2 rounded-xl flex items-center justify-between font-neb text-xs h-fit ${
         margin && margin
       }
-      }`}
+      `}
       onClick={handleClick}
     >
       <button className='flex items-center'>
