@@ -190,7 +190,7 @@ export default function Write() {
         태그
         <Input
           {...dynamicInputProps(PLACEHOLDER_MESSAGE.TAG, tagText, setTagText)}
-          keyHandler={handleKeyUp}
+          keyboardHandler={handleKeyUp}
         />
       </Label>
       <div className='flex'>
