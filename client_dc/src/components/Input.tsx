@@ -1,7 +1,5 @@
 'use client';
 
-// DESC: width 설정이 필요할 경우 width 관련 tailwind 클래스를 그대로 props로 내려주세요
-
 type Props = {
   inputType: string;
   inputName?: string;
@@ -10,6 +8,7 @@ type Props = {
   hasBorder?: boolean;
   width?: string;
   handler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  keyboardHandler?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 export default function Input({
@@ -20,6 +19,7 @@ export default function Input({
   handler,
   hasBorder,
   width,
+  keyboardHandler,
 }: Props) {
   return (
     <input
@@ -31,6 +31,7 @@ export default function Input({
       value={value}
       onChange={handler}
       placeholder={placeholder}
+      onKeyUp={keyboardHandler}
     />
   );
 }
