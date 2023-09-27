@@ -1,6 +1,6 @@
 'use client';
 
-import { ProgressBar } from '.';
+import { ProgressBar, CheckCircle } from '.';
 import { usePathname, useRouter } from 'next/navigation';
 
 // TODO: 휴지통에서 편집 클릭시 왼쪽에 체크박스 표시되어야 함
@@ -12,9 +12,18 @@ type Props = {
   groupPurchase: boolean;
   progress?: number;
   price?: number;
+  editMode?: boolean;
 };
 
-export default function Item({ itemId, title, date, groupPurchase, progress, price }: Props) {
+export default function Item({
+  itemId,
+  title,
+  date,
+  groupPurchase,
+  progress,
+  price,
+  editMode,
+}: Props) {
   const pathname = usePathname();
   const router = useRouter();
   const isMyPage = pathname.startsWith('/user');
@@ -29,8 +38,11 @@ export default function Item({ itemId, title, date, groupPurchase, progress, pri
       className='flex items-center border-b border-grey-border px-2 pt-5 pb-3'
       onClick={handleClick}
     >
-      {/* TODO: EDIT 모드 실행시 체크박스 노출 부분 */}
-      {/* <input type='checkbox' className='mr-3' /> */}
+      {editMode && (
+        <div className='pr-2'>
+          <CheckCircle color='#FF5A5A' scale={0.6} itemId={itemId} />
+        </div>
+      )}
       <div className='min-w-0 w-full'>
         <div className='flex justify-between items-center pb-2 px-1 gap-2'>
           <h2 className='font-nb text-grey-text whitespace-nowrap text-ellipsis overflow-hidden'>

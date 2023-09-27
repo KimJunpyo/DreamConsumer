@@ -1,4 +1,4 @@
-import { DeleteAll, Warn, Toolbar, Buttons } from './_components';
+import { DeleteAll, Warn, Toolbar, Buttons, Items } from './_components';
 
 export default function Dustbin() {
   return (
@@ -7,7 +7,7 @@ export default function Dustbin() {
         <DeleteAll />
         <Warn />
         <Toolbar />
-        {/* items */}
+        <Items />
       </div>
       <Buttons />
     </div>

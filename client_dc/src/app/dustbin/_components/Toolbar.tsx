@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Search } from '.';
-import { Dropdown } from '@/components';
+import { Dropdown, Edit } from '@/components';
 import { SORT_OPTIONS, SORT_OPTIONS_KO } from '../_util/constants';
 import { setSearchParams } from '@/common/functions';
 
@@ -21,7 +21,8 @@ export default function Toolbar() {
   return (
     <div className='flex justify-between items-center px-5 mt-7'>
       <Search />
-      <div>
+      <div className='flex'>
+        <Edit path='dustbin' />
         <Dropdown
           list={SORT_OPTIONS_KO}
           setState={setSortOption}
