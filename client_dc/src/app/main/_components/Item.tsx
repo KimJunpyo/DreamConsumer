@@ -1,18 +1,20 @@
 import Label from './label';
 
 import CircleChart from './CircleChart';
+
 import { CheckCircle, Tag, BookMark } from '@/components';
 import { useState } from 'react';
 
-interface ItemProps {
-  editValue: boolean;
-}
+import { useRecoilValue } from 'recoil';
+import { mainEditState } from '@/recoil/atoms';
 
-export default function Item({ editValue }: ItemProps) {
+export default function Item() {
   const [checkCircle, setCheckCircle] = useState(false);
+  const [clickBookMark, setClickBookMark] = useState(false);
+  const mainEditValue = useRecoilValue(mainEditState);
 
   const handleClick = () => {
-    if (editValue) {
+    if (mainEditValue) {
       setCheckCircle(!checkCircle);
     }
   };
@@ -20,14 +22,14 @@ export default function Item({ editValue }: ItemProps) {
   return (
     <div
       className={`relative flex justify-between w-11/12 max-h-60 border-2 ${
-        checkCircle && editValue ? 'border-red-primary' : 'border-grey-border'
+        checkCircle && mainEditValue ? 'border-red-primary' : 'border-grey-border'
       }  rounded-xl px-6 py-4 mb-2`}
       onClick={handleClick}
     >
       <div className='w-2/3 flex flex-col justify-between'>
         <div className='flex items-center mb-1'>
-          <div className='mr-1'>
-            <BookMark islike={true} />
+          <div className='mr-1' onClick={() => setClickBookMark(!clickBookMark)}>
+            <BookMark islike={clickBookMark} />
           </div>
           <div className='relative'>
             <Label group='member' />
@@ -49,7 +51,7 @@ export default function Item({ editValue }: ItemProps) {
         <CircleChart percent={80} />
       </div>
       <div className='absolute right-2 top-2'>
-        {editValue ? (
+        {mainEditValue ? (
           <div>
             <CheckCircle color='#FF8585' check={checkCircle} />
           </div>

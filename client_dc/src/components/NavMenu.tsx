@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { back, darkMode, logOut, myPage, service } from '~/image';
-import LikeIcon from './likeIcon';
+import LikeIcon from './BookMarkIcon';
 import { DeleteIcon } from '.';
 
 interface NavMenuProps {

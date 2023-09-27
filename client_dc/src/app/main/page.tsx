@@ -3,43 +3,48 @@
 import { useState } from 'react';
 
 import { Search, Item, Pagination, Buttons } from './_components';
-import { Edit } from '@/components';
+import { Dropdown, Edit } from '@/components';
 
 export default function Main() {
   const [data, setData] = useState([1, 2, 3, 4, 5, 6, 7]);
   const [postsPerPage, setPostsPerPage] = useState(3);
   const [curruntPage, setCurruntPage] = useState(1);
-  const [clickEdit, setClickEdit] = useState(false);
+  const [selectValue, setSelectValue] = useState('');
 
   const offset = (curruntPage - 1) * postsPerPage;
   const totalPosts = data.slice(offset, offset + postsPerPage).map((el, idx) => {
-    return <Item key={idx} editValue={clickEdit} />;
+    return <Item key={idx} />;
   });
 
   const setPage = (page: number) => {
     setCurruntPage(page);
   };
 
-  const handleEditClick = () => {
-    setClickEdit(!clickEdit);
-  };
-
   return (
-    <div className=' flex flex-col justify-between items-center' style={{ height: '75vh' }}>
-      <div className='z-10 flex justify-center'>
+    <div className=' flex flex-col justify-between items-center mt-20' style={{ height: '75vh' }}>
+      <div className='fixed top-16 z-30 flex justify-center'>
         <Search />
       </div>
-
-      <div className='flex items-center justify-between w-10/12 mt-12 mb-5'>
+      <div className=' z-10 fixed flex items-center justify-between w-full pt-14 px-6 mb-5 bg-white'>
         <p className='font-neb text-base text-grey-text'>생성된 목표</p>
         <div className='flex items-center justify-between font-neb text-xs text-blue-primary'>
-          <div onClick={handleEditClick}>
+          <div>
             <Edit margin={'mr-2'} path='main' />
           </div>
-          <div>전체 정렬</div>
+          <div>
+            <Dropdown
+              list={['전체', '개별구매', '공동구매', '즐겨찾기']}
+              width='w-24'
+              prevIcon={true}
+              borderless={true}
+              filled={false}
+              setState={setSelectValue}
+              rightSort={true}
+            />
+          </div>
         </div>
       </div>
-      <div className='w-full h-full flex flex-col items-center mb-14'>{totalPosts}</div>
+      <div className=' w-full h-full flex flex-col items-center mt-28 mb-14'>{totalPosts}</div>
       <div>
         <Pagination
           totalPosts={data.length}
