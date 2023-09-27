@@ -10,6 +10,7 @@ type Props = {
   hasBorder?: boolean;
   width?: string;
   handler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  keyHandler?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 export default function Input({
@@ -20,6 +21,7 @@ export default function Input({
   handler,
   hasBorder,
   width,
+  keyHandler,
 }: Props) {
   return (
     <input
@@ -30,6 +32,7 @@ export default function Input({
       name={inputName}
       value={value}
       onChange={handler}
+      onKeyUp={keyHandler}
       placeholder={placeholder}
     />
   );

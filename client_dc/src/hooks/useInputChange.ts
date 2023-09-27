@@ -13,8 +13,9 @@ const useInputChange = (
 
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputValue = e.target.value;
+    const stringLimit = isTag ? 8 : 17;
     if (isNumber) {
-      const numberValue = Number(inputValue.replaceAll(',', '').slice(0, 17));
+      const numberValue = Number(inputValue.replaceAll(',', '').slice(0, stringLimit));
 
       if (!isNaN(numberValue)) {
         setValue(numberValue.toLocaleString('ko-KR'));
@@ -22,7 +23,7 @@ const useInputChange = (
         return;
       }
     } else {
-      setValue(inputValue);
+      setValue(inputValue.slice(0, stringLimit).replaceAll(' ', ''));
     }
   };
 

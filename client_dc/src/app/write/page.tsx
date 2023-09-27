@@ -4,7 +4,7 @@ import Input from '@/components/Input';
 import RightArrow from '~/image/rightArrow.svg';
 import { useState } from 'react';
 import Image from 'next/image';
-import { Checkbox, Dropdown } from '@/components';
+import { Checkbox, Dropdown, Tag } from '@/components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { writeDropdownRadio } from '@/recoil/atoms';
 import {
@@ -29,9 +29,14 @@ export default function Write() {
   const setCheckRadio = useSetRecoilState(writeDropdownRadio);
   const checkRadio = useRecoilValue(writeDropdownRadio);
 
+  type ItemListType = 'redSmall' | 'purpleSmall' | 'greenSmall';
+
+  const itemList: ItemListType[] = ['redSmall', 'purpleSmall', 'greenSmall'];
+
   const [itemName, setItemName] = useInputChange('', false);
   const [itemUrl, setItemUrl] = useInputChange('', false);
-  const [tag, setTag, directSetTag] = useInputChange('', false, true);
+  const [tagText, setTagText, directTagText] = useInputChange('', false, true);
+  const [tags, setTags] = useState<{ id: string; color: ItemListType }[]>([]);
   const [groupPurchase, setGroupPurchase] = useState<boolean>(false);
   const [itemPrice, setItemPrice] = useInputChange('', true);
   const [currentMoney, setCurrentMoney] = useInputChange('', true);
@@ -123,18 +128,11 @@ export default function Write() {
   };
 
   const register = async () => {
-    const tagged = tag
-      .split(',')
-      .map((item) => item.trim().replace(/\s+/g, ' '))
-      .filter((item) => item !== '');
-
-    directSetTag?.(tagged.toString());
-
     const data = {
       itemName,
-      imageUrl,
+      imageUrl: 'https://i.stack.imgur.com/7pkYo.png',
       price: removeComma(itemPrice),
-      tags: tagged,
+      tags: tags.map((tag) => tag.id),
       currentMoney: removeComma(currentMoney),
       cycle,
       unitAmount: removeComma(unitAmount),
@@ -146,6 +144,20 @@ export default function Write() {
 
     console.log(data);
     await write(data);
+  };
+
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      if (tags.some((tag) => tag.id === tagText)) {
+        alert('중복된 태그는 입력할 수 없습니다.');
+      } else if (tags.length === 3) {
+        alert('더 이상 태그 입력 불가능');
+      } else if (tagText.length >= 1) {
+        const randomColor = Math.floor(Math.random() * itemList.length);
+        setTags([...tags, { id: tagText, color: itemList[randomColor] }]);
+      }
+      directTagText?.('');
+    }
   };
 
   useAutoLiftUp();
@@ -176,8 +188,24 @@ export default function Write() {
       </Label>
       <Label>
         태그
-        <Input {...dynamicInputProps(PLACEHOLDER_MESSAGE.TAG, tag, setTag)} />
+        <Input
+          {...dynamicInputProps(PLACEHOLDER_MESSAGE.TAG, tagText, setTagText)}
+          keyHandler={handleKeyUp}
+        />
       </Label>
+      <div className='flex'>
+        {tags.length > 0 &&
+          tags.map((tag) => (
+            <Tag
+              key={tag.id}
+              id={tag.id}
+              items={tag.color}
+              onDelete={(id) => setTags([...tags.filter((tag) => tag.id !== id)])}
+            >
+              {tag.id}
+            </Tag>
+          ))}
+      </div>
       <div className='flex gap-2'>
         <div className='font-neb text-grey-text text-xl grow'>구매 방식</div>
         <WriteButton
