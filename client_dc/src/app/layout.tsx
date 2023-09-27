@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <RootRecoil>
           <NavBar />
           {children}
+          <div id='modal' />
         </RootRecoil>
       </body>
     </html>
