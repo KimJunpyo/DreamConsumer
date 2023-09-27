@@ -13,6 +13,7 @@ type Props = {
   setState: React.Dispatch<React.SetStateAction<string>>;
   handler?: () => void;
   radio?: boolean;
+  rightSort?: boolean;
 };
 
 /** using example */
@@ -44,6 +45,7 @@ export default function Dropdown({
   setState,
   handler,
   radio,
+  rightSort,
 }: Props) {
   const [clickDropdown, setClickDropdown] = useState<boolean>(false);
   const [showOptions, setShowOptions] = useState<boolean>(false);
@@ -90,13 +92,17 @@ export default function Dropdown({
       <div
         className={`duration-100 h-full border border-blue-primary rounded-lg relative ${
           radio && 'bg-grey-text'
-        } ${clickDropdown ? 'border-b-transparent rounded-b-none text-grey-text ' : ''}
+        } ${clickDropdown ? 'border-b-transparent rounded-b-none text-grey-text' : ''}
          ${borderless ? borderlessClass : ''} ${filled ? filledClass : ''}`}
         onClick={() => {
           setClickDropdown(!clickDropdown);
         }}
       >
-        <div className='flex h-full items-center justify-center'>
+        <div
+          className={`flex h-full items-center p-2 pr-3 ${
+            rightSort ? 'justify-end' : 'justify-center'
+          }`}
+        >
           {selectedIdx === 0 ? list[0] : list[selectedIdx]}
         </div>
         <Image
@@ -120,9 +126,9 @@ export default function Dropdown({
             idx !== selectedIdx &&
             !REMOVED_OPTIONS.includes(option) && (
               <option
-                className={`flex h-7 items-center justify-center text-blue-primary ${
-                  filled ? 'text-white' : 'text-blue-primary'
-                }`}
+                className={`flex h-7 items-center p-2 pr-3 ${
+                  rightSort ? 'justify-end' : 'justify-center'
+                } text-blue-primary ${filled ? 'text-white' : 'text-blue-primary'}`}
                 key={idx}
                 onClick={() => {
                   handleClickOption(idx);
