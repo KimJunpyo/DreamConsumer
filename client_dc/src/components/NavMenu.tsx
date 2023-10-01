@@ -14,7 +14,7 @@ export default function NavMenu({ menuValue, handler }: NavMenuProps) {
     <>
       {menuValue && <div className=' fixed inset-0 z-5' onClick={handler}></div>}
       <div
-        className={`z-20 fixed transition-all duration-300 ease-in-out ${
+        className={`z-30 fixed transition-all duration-300 ease-in-out ${
           menuValue ? 'left-0' : '-left-full'
         }  top-0 w-9/12 h-full drop-shadow-2xl`}
       >

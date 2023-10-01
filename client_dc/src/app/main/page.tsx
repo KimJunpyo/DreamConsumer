@@ -21,7 +21,10 @@ export default function Main() {
   };
 
   return (
-    <div className=' flex flex-col justify-between items-center mt-20' style={{ height: '75vh' }}>
+    <div
+      className=' flex flex-col justify-between items-center mt-20'
+      style={{ minHeight: '85vh' }}
+    >
       <div className='fixed top-16 z-30 flex justify-center'>
         <Search />
       </div>
@@ -45,7 +48,7 @@ export default function Main() {
         </div>
       </div>
       <div className=' w-full h-full flex flex-col items-center mt-28 mb-14'>{totalPosts}</div>
-      <div>
+      <div className='mb-14'>
         <Pagination
           totalPosts={data.length}
           postsPerPage={postsPerPage}
