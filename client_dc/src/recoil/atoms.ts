@@ -14,3 +14,8 @@ export const dustbinEditState = atom({
   key: 'dustbinEditState',
   default: false,
 });
+
+export const modalState = atom({
+  key: 'modalState',
+  default: false,
+});
