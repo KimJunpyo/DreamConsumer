@@ -11,3 +11,4 @@ export { default as DeleteIcon } from './DeleteIcon';
 export { default as Edit } from './Edit';
 export { default as EditImg } from './EditImg';
 export { default as BookMark } from './BookMark';
+export { default as Modal } from './Modal';
