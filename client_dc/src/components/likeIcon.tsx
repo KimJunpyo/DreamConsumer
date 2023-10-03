@@ -1,10 +1,16 @@
 interface LikeIconProps {
-  isLike?: boolean;
-  color?: string;
+  mainState?: boolean;
+  detailState?: boolean;
 }
 
-export default function LikeIcon({ isLike, color }: LikeIconProps) {
-  const fillColor = color ? color : isLike ? '#FFE500' : '#E7E7E7';
+export default function LikeIcon({ mainState, detailState }: LikeIconProps) {
+  let fillColor;
+
+  if (detailState !== undefined) {
+    fillColor = detailState ? '#FFE500' : '#ffffff';
+  } else {
+    fillColor = mainState ? '#FFE500' : '#E7E7E7';
+  }
 
   return (
     <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
