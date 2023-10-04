@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+const MAX_TAG_LENGTH = 8;
+const MAX_NUMBER_LENGTH = 17;
+
 const useInputChange = (
   initialValue = '',
   isNumber: boolean,
@@ -13,23 +16,20 @@ const useInputChange = (
 
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputValue = e.target.value;
+    const stringLimit = isTag ? MAX_TAG_LENGTH : MAX_NUMBER_LENGTH;
     if (isNumber) {
-      const numberValue = Number(inputValue.replaceAll(',', '').slice(0, 17));
+      const numberValue = Number(inputValue.replaceAll(',', '').slice(0, stringLimit));
 
       if (!isNaN(numberValue)) {
         setValue(numberValue.toLocaleString('ko-KR'));
-      } else {
-        return;
       }
-    } else {
-      setValue(inputValue);
+
+      return;
     }
+    setValue(inputValue.slice(0, stringLimit).replaceAll(' ', ''));
   };
 
-  if (isTag) {
-    return [value, handleChangeValue, setValue];
-  }
-  return [value, handleChangeValue, null];
+  return isTag ? [value, handleChangeValue, setValue] : [value, handleChangeValue, null];
 };
 
 export default useInputChange;

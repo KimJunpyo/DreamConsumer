@@ -12,7 +12,6 @@ const ImageBox = ({ imageUrl, setImageUrl }: ImageBoxProps) => {
     if (e.target.files !== null) {
       const file = e.target.files[0];
       if (file && file.type.substring(0, 5) === 'image') {
-        console.log(1);
         setImageFile(file);
         return;
       }

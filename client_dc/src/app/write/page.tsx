@@ -4,26 +4,31 @@ import Input from '@/components/Input';
 import RightArrow from '~/image/rightArrow.svg';
 import { useState } from 'react';
 import Image from 'next/image';
-import { Checkbox, Dropdown } from '@/components';
+import { Checkbox, Dropdown, Tag } from '@/components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { writeDropdownRadio } from '@/recoil/atoms';
 import {
-  COMMON_DROPDOWN_PROPS,
-  COMMON_INPUT_PROPS,
+  CYCLE_KEYWORD,
   DROPDOWN_LIST,
-  MONTH,
-  MONTH_TO_DAY,
+  INPUT_MINIMUM,
+  ITEM_LIST,
   PLACEHOLDER_MESSAGE,
-  WEEK,
-  YEAR_TO_DAY,
 } from './_util/constants';
 import { write } from './_util/api';
-import { divideDate, openLink, openNaverShop, removeComma } from './_util/functions';
+import {
+  dynamicInputProps,
+  dynamicDropdownProps,
+  openLink,
+  openNaverShop,
+  removeComma,
+  calculatedDay,
+} from './_util/functions';
 import ImageBox from './_components/ImageBox';
 import Label from './_components/Label';
 import WriteButton from './_components/WriteButton';
 import useInputChange from '../../hooks/useInputChange';
 import useAutoLiftUp from '../../hooks/useAutoLiftUp';
+import { ItemListType } from './_util/types';
 
 export default function Write() {
   const setCheckRadio = useSetRecoilState(writeDropdownRadio);
@@ -31,7 +36,8 @@ export default function Write() {
 
   const [itemName, setItemName] = useInputChange('', false);
   const [itemUrl, setItemUrl] = useInputChange('', false);
-  const [tag, setTag, directSetTag] = useInputChange('', false, true);
+  const [tagText, setTagText, directTagText] = useInputChange('', false, true);
+  const [tags, setTags] = useState<{ id: string; color: ItemListType }[]>([]);
   const [groupPurchase, setGroupPurchase] = useState<boolean>(false);
   const [itemPrice, setItemPrice] = useInputChange('', true);
   const [currentMoney, setCurrentMoney] = useInputChange('', true);
@@ -40,101 +46,12 @@ export default function Write() {
   const [imageUrl, setImageUrl] = useState<string | null | undefined>();
   const [cycle, setCycle] = useState<string>(checkRadio);
 
-  const dynamicDropdownProps = (
-    setState: React.Dispatch<React.SetStateAction<string>>,
-    list: string[],
-    keyword: string
-  ) => {
-    return {
-      ...COMMON_DROPDOWN_PROPS,
-      setState,
-      list,
-      handler: () => setCheckRadio(keyword),
-      radio: checkRadio === keyword,
-    };
-  };
-
-  const dynamicInputProps = (
-    placeholder: string,
-    value: string,
-    handler: (e: React.ChangeEvent<HTMLInputElement>) => void
-  ) => {
-    return {
-      ...COMMON_INPUT_PROPS,
-      placeholder,
-      value,
-      handler,
-    };
-  };
-
-  const calculatedDay = () => {
-    const numberItemPrice = removeComma(itemPrice);
-    const numberCurrentMoney = removeComma(currentMoney);
-    const numberUnitAmount = removeComma(unitAmount);
-
-    if (numberItemPrice > 0 && numberCurrentMoney >= 0 && numberUnitAmount > 0) {
-      const value = Math.ceil((numberItemPrice - numberCurrentMoney) / numberUnitAmount);
-
-      let years = 0;
-      let months = 0;
-      let weeks = 0;
-      let days = 0;
-
-      switch (checkRadio) {
-        case 'Monthly':
-          {
-            let result = divideDate(value, MONTH);
-            years = result.date;
-            months = result.remain;
-          }
-          break;
-        case 'Weekly':
-          {
-            let result = divideDate(value, WEEK * MONTH);
-            years = result.date;
-
-            result = divideDate(result.remain, WEEK);
-            months = result.date;
-            weeks = result.remain;
-          }
-          break;
-        case 'Daily':
-          {
-            let result = divideDate(value, YEAR_TO_DAY);
-            years = result.date;
-
-            result = divideDate(result.remain, MONTH_TO_DAY);
-            months = result.date;
-
-            result = divideDate(result.remain, 7);
-            weeks = result.date;
-            days = result.remain;
-          }
-          break;
-        default:
-          return 'OOO';
-      }
-
-      return `${years ? years + '년 ' : ''}${months ? months + '개월 ' : ''}${
-        weeks ? weeks + '주 ' : ''
-      }${days ? days + '일 ' : ''}`;
-    }
-    return 'OOO 일';
-  };
-
   const register = async () => {
-    const tagged = tag
-      .split(',')
-      .map((item) => item.trim().replace(/\s+/g, ' '))
-      .filter((item) => item !== '');
-
-    directSetTag?.(tagged.toString());
-
     const data = {
       itemName,
-      imageUrl,
+      imageUrl: '',
       price: removeComma(itemPrice),
-      tags: tagged,
+      tags: tags.map((tag) => tag.id),
       currentMoney: removeComma(currentMoney),
       cycle,
       unitAmount: removeComma(unitAmount),
@@ -146,6 +63,20 @@ export default function Write() {
 
     console.log(data);
     await write(data);
+  };
+
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      if (tags.some((tag) => tag.id === tagText)) {
+        alert('중복된 태그는 입력할 수 없습니다.');
+      } else if (tags.length === 3) {
+        alert('태그는 최대 3개까지 입력 가능합니다.');
+      } else if (tagText.length > INPUT_MINIMUM) {
+        const randomColor = Math.floor(Math.random() * ITEM_LIST.length);
+        setTags([...tags, { id: tagText, color: ITEM_LIST[randomColor] }]);
+      }
+      directTagText?.('');
+    }
   };
 
   useAutoLiftUp();
@@ -176,8 +107,25 @@ export default function Write() {
       </Label>
       <Label>
         태그
-        <Input {...dynamicInputProps(PLACEHOLDER_MESSAGE.TAG, tag, setTag)} />
+        <span className='text-sm pl-2 text-grey-cancel'>최대 3개, 8글자</span>
+        <Input
+          {...dynamicInputProps(PLACEHOLDER_MESSAGE.TAG, tagText, setTagText)}
+          keyboardHandler={handleKeyUp}
+        />
       </Label>
+      <div className='flex'>
+        {tags.length > 0 &&
+          tags.map((tag) => (
+            <Tag
+              key={tag.id}
+              id={tag.id}
+              items={tag.color}
+              onDelete={(id) => setTags([...tags.filter((tag) => tag.id !== id)])}
+            >
+              {tag.id}
+            </Tag>
+          ))}
+      </div>
       <div className='flex gap-2'>
         <div className='font-neb text-grey-text text-xl grow'>구매 방식</div>
         <WriteButton
@@ -211,19 +159,33 @@ export default function Write() {
         저금 계획 주기
         <div className='flex gap-2'>
           <WriteButton
-            click={checkRadio === 'Daily'}
+            click={checkRadio === CYCLE_KEYWORD.DAILY}
             width='w-32'
             height='h-8'
             rounded='rounded-lg'
             handler={() => {
-              setCycle('Daily');
-              setCheckRadio('Daily');
+              setCycle(CYCLE_KEYWORD.DAILY);
+              setCheckRadio(CYCLE_KEYWORD.DAILY);
             }}
           >
             매일
           </WriteButton>
-          <Dropdown {...dynamicDropdownProps(setCycle, DROPDOWN_LIST.WEEKLY, 'Weekly')} />
-          <Dropdown {...dynamicDropdownProps(setCycle, DROPDOWN_LIST.MONTHLY, 'Monthly')} />
+          <Dropdown
+            {...dynamicDropdownProps(
+              setCycle,
+              DROPDOWN_LIST.WEEKLY,
+              checkRadio === CYCLE_KEYWORD.WEEKLY,
+              () => setCheckRadio(CYCLE_KEYWORD.WEEKLY)
+            )}
+          />
+          <Dropdown
+            {...dynamicDropdownProps(
+              setCycle,
+              DROPDOWN_LIST.MONTHLY,
+              checkRadio === CYCLE_KEYWORD.MONTHLY,
+              () => setCheckRadio(CYCLE_KEYWORD.MONTHLY)
+            )}
+          />
         </div>
       </div>
       <Label>
@@ -235,7 +197,10 @@ export default function Write() {
       </Checkbox>
       <hr className='border border-grey-text' />
       <div className='font-neb text-grey-text text-[15px] self-center'>
-        <span className='text-red-text'>{calculatedDay()}</span> 뒤에 구매할 수 있어요 !
+        <span className='text-red-text'>
+          {calculatedDay(itemPrice, currentMoney, unitAmount, checkRadio)}
+        </span>
+        뒤에 구매할 수 있어요 !
       </div>
       <div className='mt-2 self-center w-full'>
         <WriteButton click={false} width='w-full' height='h-12' handler={register} icon='plus'>
