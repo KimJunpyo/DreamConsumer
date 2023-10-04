@@ -24,7 +24,7 @@ export default function Replace({ memberButton, itemId, setState }: ReplaceProps
       <ReplaceIcon clickPlace={clickPlace} />
       {clickPlace ? (
         <div className='absolute -left-5 bottom-8 flex flex-col-reverse'>
-          <span className='mb-1'>
+          <div className='mb-1'>
             <Button
               width='w-16'
               height='h-6'
@@ -35,8 +35,8 @@ export default function Replace({ memberButton, itemId, setState }: ReplaceProps
             >
               삭제
             </Button>
-          </span>
-          <span className='mb-1'>
+          </div>
+          <div className='mb-1'>
             <Link href={`/edit/${itemId}`}>
               <Button
                 width='w-16'
@@ -49,9 +49,9 @@ export default function Replace({ memberButton, itemId, setState }: ReplaceProps
                 수정
               </Button>
             </Link>
-          </span>
+          </div>
           {memberButton && (
-            <span className='mb-1'>
+            <div className='mb-1'>
               <Link href={`/detail/group/${itemId}/member`}>
                 <Button
                   width='w-16'
@@ -64,7 +64,7 @@ export default function Replace({ memberButton, itemId, setState }: ReplaceProps
                   멤버관리
                 </Button>
               </Link>
-            </span>
+            </div>
           )}
         </div>
       ) : null}

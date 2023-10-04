@@ -27,7 +27,7 @@ export default function TopTitle() {
         </p>
         <div className=' flex items-center justify-between w-3/6 mb-20'>
           <span className='font-neb text-base text text-white '>매월 (10)일</span>
-          <span onClick={handleClickMoney}>
+          <div onClick={handleClickMoney}>
             <Button
               width='w-24 '
               height='h-7'
@@ -41,12 +41,12 @@ export default function TopTitle() {
                 <Triangle clickMoney={clickMoney} />
               </span>
             </Button>
-          </span>
+          </div>
         </div>
         <div className='absolute flex bottom-3 right-8'>
           {/* islike의 값은 데이터에서 가져오기 */}
           <span className='mr-3'>
-            <BookMark detailState={false} />
+            <BookMark isLike={false} isDetailPage={true} />
           </span>
           <Replace memberButton={true} itemId={itemId} setState={setClickMoney} />
         </div>

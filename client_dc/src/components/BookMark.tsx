@@ -1,18 +1,18 @@
-// detail페이지에서 사용하는 BookMark의 상태의 props는 detailState로 내려주시면 false일때 white색상으로 변경됩니다.
+// isDetailPage의 값을 ture로 주게되면 기본 색상이 흰색으로 들어갑니다.
 
 'use client';
 
 import BookMarkIcon from '@/components/BookMarkIcon';
 
 interface BookMarkProps {
-  mainState?: boolean;
-  detailState?: boolean;
+  isLike?: boolean;
+  isDetailPage?: boolean;
 }
 
-export default function BookMark({ mainState, detailState }: BookMarkProps) {
+export default function BookMark({ isLike, isDetailPage }: BookMarkProps) {
   return (
     <div>
-      <BookMarkIcon mainState={mainState} detailState={detailState} />
+      <BookMarkIcon isLike={isLike} isDetailPage={isDetailPage} />
     </div>
   );
 }
