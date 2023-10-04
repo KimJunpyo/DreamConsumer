@@ -2,7 +2,7 @@
 
 'use client';
 
-import LikeIcon from '@/components/likeIcon';
+import BookMarkIcon from '@/components/BookMarkIcon';
 
 interface BookMarkProps {
   mainState?: boolean;
@@ -12,7 +12,7 @@ interface BookMarkProps {
 export default function BookMark({ mainState, detailState }: BookMarkProps) {
   return (
     <div>
-      <LikeIcon mainState={mainState} detailState={detailState} />
+      <BookMarkIcon mainState={mainState} detailState={detailState} />
     </div>
   );
 }
