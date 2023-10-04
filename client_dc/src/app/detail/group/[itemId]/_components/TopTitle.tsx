@@ -9,20 +9,21 @@ import { useRouter } from 'next/navigation';
 export default function TopTitle() {
   const [clickMoney, setClickMoney] = useState(false);
   const router = useRouter();
+  const itemId = 123;
 
   const handleClickMoney = () => {
     setClickMoney(!clickMoney);
     if (clickMoney) {
-      router.push('/detail/group');
+      router.push(`/detail/group/${itemId}`);
     } else {
-      router.push('/detail/group/money');
+      router.push(`/detail/group/${itemId}/money`);
     }
   };
   return (
     <div className='fixed w-full'>
       <div className='relative min-h-[12rem] flex flex-col items-center w-full  bg-blue-primary'>
         <p className=' pb-3 w-3/5 font-neb text-3xl text-white text-center'>
-          <Link href={'/detail/group'}>(비스포크 제트봇 AI 로봇청소기)</Link>
+          <Link href={`/detail/group/${itemId}`}>(비스포크 제트봇 AI 로봇청소기)</Link>
         </p>
         <div className=' flex items-center justify-between w-3/6 mb-20'>
           <span className='font-neb text-base text text-white '>매월 (10)일</span>
@@ -47,7 +48,7 @@ export default function TopTitle() {
           <span className='mr-3'>
             <BookMark detailState={false} />
           </span>
-          <Replace memberButton={true} itemId={123} setState={setClickMoney} />
+          <Replace memberButton={true} itemId={itemId} setState={setClickMoney} />
         </div>
       </div>
     </div>

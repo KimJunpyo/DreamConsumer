@@ -52,7 +52,7 @@ export default function Replace({ memberButton, itemId, setState }: ReplaceProps
           </span>
           {memberButton && (
             <span className='mb-1'>
-              <Link href={'/detail/group/member'}>
+              <Link href={`/detail/group/${itemId}/member`}>
                 <Button
                   width='w-16'
                   height='h-6'
