@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+const MAX_TAG_LENGTH = 8;
+const MAX_NUMBER_LENGTH = 17;
+
 const useInputChange = (
   initialValue = '',
   isNumber: boolean,
@@ -13,7 +16,7 @@ const useInputChange = (
 
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     let inputValue = e.target.value;
-    const stringLimit = isTag ? 8 : 17;
+    const stringLimit = isTag ? MAX_TAG_LENGTH : MAX_NUMBER_LENGTH;
     if (isNumber) {
       const numberValue = Number(inputValue.replaceAll(',', '').slice(0, stringLimit));
 

@@ -107,7 +107,7 @@ export default function Write() {
       </Label>
       <Label>
         태그
-        <span className='text-sm pl-2 text-grey-border'>최대 3개, 8글자</span>
+        <span className='text-sm pl-2 text-grey-cancel'>최대 3개, 8글자</span>
         <Input
           {...dynamicInputProps(PLACEHOLDER_MESSAGE.TAG, tagText, setTagText)}
           keyboardHandler={handleKeyUp}
