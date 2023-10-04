@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { back, darkMode, logOut, myPage, service } from '~/image';
-import LikeIcon from './likeIcon';
+import LikeIcon from './BookMarkIcon';
 import { DeleteIcon } from '.';
 
 interface NavMenuProps {
@@ -14,7 +14,7 @@ export default function NavMenu({ menuValue, handler }: NavMenuProps) {
     <>
       {menuValue && <div className=' fixed inset-0 z-5' onClick={handler}></div>}
       <div
-        className={`z-20 fixed transition-all duration-300 ease-in-out ${
+        className={`z-30 fixed transition-all duration-300 ease-in-out ${
           menuValue ? 'left-0' : '-left-full'
         }  top-0 w-9/12 h-full drop-shadow-2xl`}
       >

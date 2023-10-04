@@ -1,15 +1,15 @@
 'use client';
 
-import LikeIcon from '@/components/likeIcon';
+import BookMarkIcon from '@/components/BookMarkIcon';
 
-interface LikeProps {
+interface BookMarkProps {
   islike: boolean;
 }
 
-export default function BookMark({ islike }: LikeProps) {
+export default function BookMark({ islike }: BookMarkProps) {
   return (
     <div>
-      <LikeIcon isLike={islike} />
+      <BookMarkIcon isLike={islike} />
     </div>
   );
 }

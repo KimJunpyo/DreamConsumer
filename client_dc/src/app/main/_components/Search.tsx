@@ -18,7 +18,7 @@ export default function Search() {
   return (
     <>
       <form
-        className='flex justify-center w-11/12 h-12 rounded-3xl shadow-lg absolute  top-16 bg-white z-10'
+        className='flex justify-center w-[22rem] h-12 rounded-3xl shadow-lg bg-white z-30'
         action=''
         onSubmit={handleSubmit}
       >
@@ -37,7 +37,7 @@ export default function Search() {
       </form>
       {clickSearch && (
         <div
-          className='fixed w-full h-screen bg-black bg-opacity-80 flex flex-col items-center justify-center'
+          className='fixed w-full h-screen bg-black bg-opacity-80 flex flex-col items-center justify-center mt-5'
           onClick={handleSearchClick}
         >
           <p className='font-neb text-3xl text-white mb-20'>Tag 검색</p>

@@ -1,9 +1,9 @@
-interface LikeIconProps {
+interface BookMarkIconProps {
   isLike?: boolean;
   color?: string;
 }
 
-export default function LikeIcon({ isLike, color }: LikeIconProps) {
+export default function BookMarkIcon({ isLike, color }: BookMarkIconProps) {
   const fillColor = color ? color : isLike ? '#FFE500' : '#E7E7E7';
 
   return (
