@@ -21,14 +21,11 @@ export default function Main() {
   };
 
   return (
-    <div
-      className=' flex flex-col justify-between items-center mt-20'
-      style={{ minHeight: '85vh' }}
-    >
+    <div className='flex flex-col justify-between items-center mt-20' style={{ minHeight: '85vh' }}>
       <div className='fixed top-16 z-30 flex justify-center'>
         <Search />
       </div>
-      <div className=' z-10 fixed flex items-center justify-between w-full pt-14 px-6 mb-5 bg-white'>
+      <div className='z-10 fixed flex items-center justify-between w-full pt-14 px-6 mb-5 bg-white'>
         <p className='font-neb text-base text-grey-text'>생성된 목표</p>
         <div className='flex items-center justify-between font-neb text-xs text-blue-primary'>
           <div>
@@ -47,7 +44,7 @@ export default function Main() {
           </div>
         </div>
       </div>
-      <div className=' w-full h-full flex flex-col items-center mt-28 mb-14'>{totalPosts}</div>
+      <div className='w-full h-full flex flex-col items-center mt-28 mb-14'>{totalPosts}</div>
       <div className='mb-14'>
         <Pagination
           totalPosts={data.length}
