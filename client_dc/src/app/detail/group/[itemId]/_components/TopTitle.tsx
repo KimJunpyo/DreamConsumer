@@ -21,8 +21,8 @@ export default function TopTitle() {
   };
   return (
     <div className='fixed w-full'>
-      <div className='relative min-h-[12rem] flex flex-col items-center w-full  bg-blue-primary'>
-        <p className=' pb-3 w-3/5 font-neb text-3xl text-white text-center'>
+      <div className='mt-20 relative min-h-[12rem] flex flex-col items-center w-full bg-blue-primary'>
+        <p className='pb-3 w-3/5 font-neb text-3xl text-white text-center'>
           <Link href={`/detail/group/${itemId}`}>(비스포크 제트봇 AI 로봇청소기)</Link>
         </p>
         <div className=' flex items-center justify-between w-3/6 mb-20'>

@@ -10,7 +10,7 @@ export default function Group() {
   const tags = ['#과일', '#네이버', '#제철', '#과일', '#네이버'];
 
   return (
-    <div className='pt-48 flex justify-center'>
+    <div className='pt-[270px] flex justify-center'>
       <div className='w-9/12 mt-3'>
         <ImgBox />
         <div className='flex justify-center mt-2 w-full border-[1px] borde-[#d9d9d9] rounded-full text-base py-2'>
