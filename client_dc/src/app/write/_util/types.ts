@@ -30,3 +30,5 @@ export type WriteButtonProps = {
   icon?: string;
   handler: () => void;
 };
+
+export type ItemListType = 'redSmall' | 'purpleSmall' | 'greenSmall';

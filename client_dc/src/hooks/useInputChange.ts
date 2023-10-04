@@ -19,18 +19,14 @@ const useInputChange = (
 
       if (!isNaN(numberValue)) {
         setValue(numberValue.toLocaleString('ko-KR'));
-      } else {
-        return;
       }
-    } else {
-      setValue(inputValue.slice(0, stringLimit).replaceAll(' ', ''));
+
+      return;
     }
+    setValue(inputValue.slice(0, stringLimit).replaceAll(' ', ''));
   };
 
-  if (isTag) {
-    return [value, handleChangeValue, setValue];
-  }
-  return [value, handleChangeValue, null];
+  return isTag ? [value, handleChangeValue, setValue] : [value, handleChangeValue, null];
 };
 
 export default useInputChange;
