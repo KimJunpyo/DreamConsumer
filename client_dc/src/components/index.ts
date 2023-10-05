@@ -12,3 +12,5 @@ export { default as Edit } from './Edit';
 export { default as EditImg } from './EditImg';
 export { default as BookMark } from './BookMark';
 export { default as Modal } from './Modal';
+export { default as Replace } from './Replace';
+export { default as ReplaceIcon } from './ReplaceIcon';

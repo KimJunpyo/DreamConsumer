@@ -3,22 +3,25 @@
 // width와 height를 입력하지 않으면 full로 들어갑니다.
 // font를 입력하지 않으면 기본값으로 font-nl이 들어갑니다.
 // fontSize값을 입력하지 않으면 기본값으로 xs(0.75rem, 12px) 이 들어갑니다.
+// fontColor값을 입력하지 않으면 기본으로 'text-white'이 들어갑니다.
 // color값을 입력하지 않으면 기본값으로 gray색이 들어갑니다.
 // rounded값을 입력하지 않으면 기본값으로 rounded-xl크기가 들어갑니다.
 
 'use client';
 
 import Image from 'next/image';
+import { ReactNode } from 'react';
 import Delete from '~/image/delete.svg';
 import Plus from '~/image/plus.svg';
 import Refresh from '~/image/refresh.svg';
 
 interface ButtonProps {
-  children: string;
+  children: string | ReactNode;
   width?: string;
   height?: string;
   font?: string;
   fontSize?: string;
+  fontColor?: string;
   color?: string;
   rounded?: string;
   icon?: 'delete' | 'plus' | 'refresh';
@@ -38,6 +41,7 @@ export default function Button({
   height,
   color,
   fontSize,
+  fontColor,
   font,
   rounded,
   handler,
@@ -50,7 +54,7 @@ export default function Button({
         height ? height : 'h-full'
       } ${color ? color : 'bg-grey-cancel'} ${fontSize ? fontSize : 'text-xs'} ${
         font ? font : 'font-nl'
-      } text-white ${rounded ? rounded : 'rounded-xl'} `}
+      } ${fontColor ? fontColor : 'text-white'}  ${rounded ? rounded : 'rounded-xl'} `}
       onClick={handler}
     >
       {IconImage && <Image src={IconImage} alt={icon || ''} className='mr-2' />}
