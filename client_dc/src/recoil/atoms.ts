@@ -19,3 +19,8 @@ export const modalState = atom({
   key: 'modalState',
   default: false,
 });
+
+export const detailState = atom({
+  key: 'detailState',
+  default: '',
+});

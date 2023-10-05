@@ -7,6 +7,8 @@ import NavMenu from './NavMenu';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRecoilValue } from 'recoil';
+import { detailState } from '@/recoil/atoms';
 
 export default function NavBar() {
   const [menuValue, setMenuValue] = useState(false);
@@ -14,10 +16,15 @@ export default function NavBar() {
   const menuHandler = () => {
     setMenuValue(!menuValue);
   };
+  const detaiPageState = useRecoilValue(detailState);
 
   return (
     <>
-      <div className='z-30 fixed w-full top-0 h-[84px] bg-blue-primary flex justify-between items-center'>
+      <div
+        className={`z-30 fixed w-full top-0 h-[84px]  ${
+          detaiPageState === 'group' ? 'bg-blue-primary' : 'bg-red-primary'
+        } flex justify-between items-center`}
+      >
         <Image src={hamburger} alt='menu' className='ml-4' onClick={menuHandler} />
 
         <div className='font-nb text-base text-white'>

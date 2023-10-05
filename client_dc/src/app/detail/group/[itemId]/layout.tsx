@@ -1,9 +1,9 @@
-import { TopTitle } from './_components';
+import { TopTitle } from '../../_components';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <TopTitle />
+      <TopTitle pages='group' />
       {children}
     </div>
   );

@@ -4,9 +4,10 @@
 import { useState } from 'react';
 import { Button, ReplaceIcon } from '.';
 import Link from 'next/link';
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 
 interface ReplaceProps {
-  itemId: number;
+  itemId: number | string;
   memberButton?: boolean;
   setState?: (value: boolean) => void;
 }

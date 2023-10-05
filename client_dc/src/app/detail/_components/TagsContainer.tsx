@@ -1,7 +1,7 @@
 'use client';
 
 import { Tag } from '@/components';
-import { tagsSmallColor } from '../_util/functions';
+import { tagsSmallColor } from '../group/[itemId]/_util/functions';
 
 interface TagsContainerProps {
   tags: string[];
