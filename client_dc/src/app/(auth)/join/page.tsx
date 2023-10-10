@@ -25,7 +25,7 @@ export default function Join() {
   const [errors, setErrors] = useState<SignUpError>({});
   const [job, setJob] = useState('');
   const [age, setAge] = useState('');
-  const AGE_RANGE = useMemo(() => generateRange(1950, 2015).map(String), []);
+  const AGE_RANGE = useMemo(() => generateRange(1950, 2010).reverse().map(String), []);
 
   const signUp = async () => {
     const errors = validate({ ...values, job, age: Number(age) });
