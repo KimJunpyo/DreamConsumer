@@ -17,3 +17,4 @@ export { default as darkMode } from './darkMode.svg';
 export { default as logOut } from './logOut.svg';
 export { default as back } from './back.svg';
 export { default as blankImage } from './blankImage.png';
+export { default as search } from './search.svg';
