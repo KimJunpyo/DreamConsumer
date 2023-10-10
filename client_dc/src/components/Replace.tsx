@@ -4,7 +4,6 @@
 import { useState } from 'react';
 import { Button, ReplaceIcon } from '.';
 import Link from 'next/link';
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 
 interface ReplaceProps {
   itemId: number | string;
@@ -16,6 +15,8 @@ export default function Replace({ memberButton, itemId, setState }: ReplaceProps
   const [clickPlace, setClickPlace] = useState(false);
   const handlePlaceState = () => {
     setClickPlace(!clickPlace);
+  };
+  const handleSetState = () => {
     if (setState) {
       setState(false);
     }
@@ -52,7 +53,7 @@ export default function Replace({ memberButton, itemId, setState }: ReplaceProps
             </Link>
           </div>
           {memberButton && (
-            <div className='mb-1'>
+            <div className='mb-1' onClick={handleSetState}>
               <Link href={`/detail/group/${itemId}/member`}>
                 <Button
                   width='w-16'
