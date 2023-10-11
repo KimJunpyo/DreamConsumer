@@ -16,6 +16,16 @@ export default function Member() {
     { name: '혜인', key: 3, leader: true },
   ];
 
+  const isHangul = (str: string) => {
+    var chk = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    return chk.test(str);
+  };
+
+  const isChosung = (str: string) => {
+    var chk = /[ㄱ-ㅎ]/;
+    return chk.test(str);
+  };
+
   const getChosung = (word: string) => {
     const cho = [
       'ㄱ',
@@ -61,10 +71,15 @@ export default function Member() {
     return el.key === cancelMemberKey;
   });
 
-  // const findSearchName = data.find((el) => el.name === searchValue);
-  const findSearchName = data.filter((el) => getChosung(el.name).includes(getChosung(searchValue)));
-
-  console.log(findSearchName);
+  const findSearchName = data.filter((el) => {
+    if (!isHangul(searchValue)) {
+      return el.name.includes(searchValue);
+    } else if (isChosung(searchValue)) {
+      return getChosung(el.name).includes(getChosung(searchValue));
+    } else {
+      return el.name === searchValue;
+    }
+  });
 
   const handleShowMessage = () => {
     setShowMessage(true);
