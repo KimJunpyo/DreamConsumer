@@ -12,14 +12,18 @@ export default function Money() {
     { name: '혜인', price: 50000, percent: 80, deposit: true },
   ];
 
-  const [selectedButton, setSelectedButton] = useState('전체');
+  const DEPOSIT = '입금완료';
+  const NON_DEPOSIT = '미입금';
+  const TOTAL = '전체';
+
+  const [selectedButton, setSelectedButton] = useState(TOTAL);
   const [getData, setGetData] = useState(data);
 
   const handleDepositFilter = (buttonName: string) => {
     let depositFilter;
-    if (buttonName === '미입금') {
+    if (buttonName === NON_DEPOSIT) {
       depositFilter = data.filter((el) => el.deposit === false);
-    } else if (buttonName === '입금완료') {
+    } else if (buttonName === DEPOSIT) {
       depositFilter = data.filter((el) => el.deposit === true);
     } else {
       depositFilter = data;
@@ -37,25 +41,25 @@ export default function Money() {
       <div className='w-full flex flex-col items-center'>
         <div className='w-6/12 flex flex-row justify-between font-neb text-base text-[#e2e2e2]'>
           <button
-            className={`${selectedButton === '전체' && 'text-grey-text'}`}
+            className={`${selectedButton === TOTAL && 'text-grey-text'}`}
             onClick={() => {
-              handleDepositFilter('전체');
+              handleDepositFilter(TOTAL);
             }}
           >
             전체
           </button>
           <button
-            className={`${selectedButton === '미입금' && 'text-grey-text'}`}
+            className={`${selectedButton === NON_DEPOSIT && 'text-grey-text'}`}
             onClick={() => {
-              handleDepositFilter('미입금');
+              handleDepositFilter(NON_DEPOSIT);
             }}
           >
             미입금
           </button>
           <button
-            className={`${selectedButton === '입금완료' && 'text-grey-text'}`}
+            className={`${selectedButton === DEPOSIT && 'text-grey-text'}`}
             onClick={() => {
-              handleDepositFilter('입금완료');
+              handleDepositFilter(DEPOSIT);
             }}
           >
             입금완료
@@ -79,7 +83,7 @@ export default function Money() {
             })}
           </div>
           <div className='flex justify-between w-8/12'>
-            {selectedButton === '미입금' ? (
+            {selectedButton === NON_DEPOSIT ? (
               <>
                 <Button
                   width='w-24'

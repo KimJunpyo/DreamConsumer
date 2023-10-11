@@ -17,12 +17,12 @@ export default function Member() {
   ];
 
   const isHangul = (str: string) => {
-    var chk = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    const chk = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     return chk.test(str);
   };
 
   const isChosung = (str: string) => {
-    var chk = /[ㄱ-ㅎ]/;
+    const chk = /[ㄱ-ㅎ]/;
     return chk.test(str);
   };
 
@@ -49,11 +49,15 @@ export default function Member() {
       'ㅎ',
     ];
 
+    const offset = 44032;
+    const codeNumberDiff = 588;
+    const koreanSyllables = 11172;
+
     let result = '';
 
     for (let i = 0; i < word.length; i++) {
-      const code = word.charCodeAt(i) - 44032;
-      if (code > -1 && code < 11172) result += cho[Math.floor(code / 588)];
+      const code = word.charCodeAt(i) - offset;
+      if (code > -1 && code < koreanSyllables) result += cho[Math.floor(code / codeNumberDiff)];
       else result += word[i];
     }
     return result;
