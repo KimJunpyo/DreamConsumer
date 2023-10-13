@@ -8,7 +8,11 @@ import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { mainEditState } from '@/recoil/atoms';
 
-export default function Item() {
+type ItemProps = {
+  handler: () => void;
+};
+
+export default function Item({ handler }: ItemProps) {
   const [checkCircle, setCheckCircle] = useState(false);
   const [clickBookMark, setClickBookMark] = useState(false);
   const mainEditValue = useRecoilValue(mainEditState);
@@ -16,6 +20,8 @@ export default function Item() {
   const handleClick = () => {
     if (mainEditValue) {
       setCheckCircle(!checkCircle);
+    } else {
+      handler();
     }
   };
 
@@ -29,7 +35,7 @@ export default function Item() {
       <div className='w-2/3 flex flex-col justify-between'>
         <div className='flex items-center mb-1'>
           <div className='mr-1' onClick={() => setClickBookMark(!clickBookMark)}>
-            <BookMark islike={clickBookMark} />
+            <BookMark isLike={clickBookMark} />
           </div>
           <div className='relative'>
             <Label group='member' />
@@ -40,7 +46,14 @@ export default function Item() {
         </div>
         <div className=' font-neb text-grey-text text-xl mb-1 break-words'>제목</div>
         <div>
-          {/* 인덱스 번호를 /3한 뒤 나머지에 따른 색 나오게 (나머지 1 == redSmall, 나머지 2 == greenSmall, 나머지 0 == purpleSmall) */}
+          {/* {tags?.map((el, idx) => {
+            return (
+              <Tag key={idx} items={tagsSmallColor(idx)}>
+                {el.name}
+              </Tag>
+            );
+          })} */}
+
           <Tag items='redSmall'>#2024년</Tag>
           <Tag items='greenSmall'>#리조트</Tag>
           <Tag items='purpleSmall'>#연말</Tag>

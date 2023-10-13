@@ -1,19 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Search, Item, Pagination, Buttons } from './_components';
 import { Dropdown, Edit } from '@/components';
+import { useSetRecoilState } from 'recoil';
+import { detailState } from '@/recoil/atoms';
+import { useRouter } from 'next/navigation';
 
 export default function Main() {
   const [data, setData] = useState([1, 2, 3, 4, 5, 6, 7]);
+
   const [postsPerPage, setPostsPerPage] = useState(3);
   const [curruntPage, setCurruntPage] = useState(1);
   const [selectValue, setSelectValue] = useState('');
+  const setDetaiPageState = useSetRecoilState(detailState);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    setDetaiPageState('group');
+  }, [setDetaiPageState]);
 
   const offset = (curruntPage - 1) * postsPerPage;
   const totalPosts = data.slice(offset, offset + postsPerPage).map((el, idx) => {
-    return <Item key={idx} />;
+    const pageRouter = () => {
+      router.push('/detail/group/1234');
+    };
+    return <Item key={idx} handler={pageRouter} />;
   });
 
   const setPage = (page: number) => {
