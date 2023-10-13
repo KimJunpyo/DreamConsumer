@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { search } from '~/image';
+import { getChosung, isChosung, isHangul } from '../_util/functions';
 
 export default function Member() {
   const data = [
@@ -15,53 +16,6 @@ export default function Member() {
     { name: '준표', key: 2, leader: false },
     { name: '혜인', key: 3, leader: true },
   ];
-
-  const isHangul = (str: string) => {
-    const chk = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-    return chk.test(str);
-  };
-
-  const isChosung = (str: string) => {
-    const chk = /[ㄱ-ㅎ]/;
-    return chk.test(str);
-  };
-
-  const getChosung = (word: string) => {
-    const cho = [
-      'ㄱ',
-      'ㄲ',
-      'ㄴ',
-      'ㄷ',
-      'ㄸ',
-      'ㄹ',
-      'ㅁ',
-      'ㅂ',
-      'ㅃ',
-      'ㅅ',
-      'ㅆ',
-      'ㅇ',
-      'ㅈ',
-      'ㅉ',
-      'ㅊ',
-      'ㅋ',
-      'ㅌ',
-      'ㅍ',
-      'ㅎ',
-    ];
-
-    const offset = 44032;
-    const codeNumberDiff = 588;
-    const koreanSyllables = 11172;
-
-    let result = '';
-
-    for (let i = 0; i < word.length; i++) {
-      const code = word.charCodeAt(i) - offset;
-      if (code > -1 && code < koreanSyllables) result += cho[Math.floor(code / codeNumberDiff)];
-      else result += word[i];
-    }
-    return result;
-  };
 
   const [showMessage, setShowMessage] = useState(false);
   const [cancelMemberKey, setCancelMemberKey] = useState<number | string>();
@@ -86,6 +40,9 @@ export default function Member() {
   });
 
   const handleShowMessage = () => {
+    // 현재 페이지 링크를 복사 했는데 초대링크로 바꾸기
+    navigator.clipboard.writeText(window.location.href);
+
     setShowMessage(true);
     setTimeout(() => {
       setShowMessage(false);

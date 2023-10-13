@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { getPercentColor } from '../_util/functions';
 import Link from 'next/link';
 import { Button } from '@/components';
+import { DEPOSIT_LIST } from '../_util/constants';
 
 export default function Money() {
   const data = [
@@ -12,18 +13,14 @@ export default function Money() {
     { name: '혜인', price: 50000, percent: 80, deposit: true },
   ];
 
-  const DEPOSIT = '입금완료';
-  const NON_DEPOSIT = '미입금';
-  const TOTAL = '전체';
-
-  const [selectedButton, setSelectedButton] = useState(TOTAL);
+  const [selectedButton, setSelectedButton] = useState(DEPOSIT_LIST.TOTAL);
   const [getData, setGetData] = useState(data);
 
   const handleDepositFilter = (buttonName: string) => {
     let depositFilter;
-    if (buttonName === NON_DEPOSIT) {
+    if (buttonName === DEPOSIT_LIST.NON_DEPOSIT) {
       depositFilter = data.filter((el) => el.deposit === false);
-    } else if (buttonName === DEPOSIT) {
+    } else if (buttonName === DEPOSIT_LIST.DEPOSIT) {
       depositFilter = data.filter((el) => el.deposit === true);
     } else {
       depositFilter = data;
@@ -41,28 +38,28 @@ export default function Money() {
       <div className='w-full flex flex-col items-center'>
         <div className='w-6/12 flex flex-row justify-between font-neb text-base text-[#e2e2e2]'>
           <button
-            className={`${selectedButton === TOTAL && 'text-grey-text'}`}
+            className={`${selectedButton === DEPOSIT_LIST.TOTAL && 'text-grey-text'}`}
             onClick={() => {
-              handleDepositFilter(TOTAL);
+              handleDepositFilter(DEPOSIT_LIST.TOTAL);
             }}
           >
-            전체
+            {DEPOSIT_LIST.TOTAL}
           </button>
           <button
-            className={`${selectedButton === NON_DEPOSIT && 'text-grey-text'}`}
+            className={`${selectedButton === DEPOSIT_LIST.NON_DEPOSIT && 'text-grey-text'}`}
             onClick={() => {
-              handleDepositFilter(NON_DEPOSIT);
+              handleDepositFilter(DEPOSIT_LIST.NON_DEPOSIT);
             }}
           >
-            미입금
+            {DEPOSIT_LIST.NON_DEPOSIT}
           </button>
           <button
-            className={`${selectedButton === DEPOSIT && 'text-grey-text'}`}
+            className={`${selectedButton === DEPOSIT_LIST.DEPOSIT && 'text-grey-text'}`}
             onClick={() => {
-              handleDepositFilter(DEPOSIT);
+              handleDepositFilter(DEPOSIT_LIST.DEPOSIT);
             }}
           >
-            입금완료
+            {DEPOSIT_LIST.DEPOSIT}
           </button>
         </div>
         <div className='pt-4 w-9/12 flex flex-col items-center justify-between'>
@@ -83,7 +80,7 @@ export default function Money() {
             })}
           </div>
           <div className='flex justify-between w-8/12'>
-            {selectedButton === NON_DEPOSIT ? (
+            {selectedButton === DEPOSIT_LIST.NON_DEPOSIT ? (
               <>
                 <Button
                   width='w-24'

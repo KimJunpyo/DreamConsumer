@@ -16,3 +16,50 @@ export const tagsSmallColor = (index: number) => {
       return 'redSmall';
   }
 };
+
+export const isHangul = (str: string) => {
+  const chk = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  return chk.test(str);
+};
+
+export const isChosung = (str: string) => {
+  const chk = /[ㄱ-ㅎ]/;
+  return chk.test(str);
+};
+
+export const getChosung = (word: string) => {
+  const cho = [
+    'ㄱ',
+    'ㄲ',
+    'ㄴ',
+    'ㄷ',
+    'ㄸ',
+    'ㄹ',
+    'ㅁ',
+    'ㅂ',
+    'ㅃ',
+    'ㅅ',
+    'ㅆ',
+    'ㅇ',
+    'ㅈ',
+    'ㅉ',
+    'ㅊ',
+    'ㅋ',
+    'ㅌ',
+    'ㅍ',
+    'ㅎ',
+  ];
+
+  const offset = 44032;
+  const codeNumberDiff = 588;
+  const koreanSyllables = 11172;
+
+  let result = '';
+
+  for (let i = 0; i < word.length; i++) {
+    const code = word.charCodeAt(i) - offset;
+    if (code > -1 && code < koreanSyllables) result += cho[Math.floor(code / codeNumberDiff)];
+    else result += word[i];
+  }
+  return result;
+};

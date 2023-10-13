@@ -14,7 +14,7 @@ export default function Group({ params }: GroupProps) {
   const percent = 80;
   const tags = ['#과일', '#네이버', '#제철', '#과일', '#네이버'];
 
-  console.log(params);
+  // console.log(params);
 
   return (
     <div className='pt-[275px] flex justify-center'>
