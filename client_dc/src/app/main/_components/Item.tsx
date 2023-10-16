@@ -1,28 +1,42 @@
 import Label from './label';
-
 import CircleChart from './CircleChart';
 
 import { CheckCircle, Tag, BookMark } from '@/components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRecoilValue } from 'recoil';
 import { mainEditState } from '@/recoil/atoms';
 
 type ItemProps = {
   handler: () => void;
+  itemId: number;
+  checkDeleteId: (itemId: number, isChecked: boolean) => void;
 };
 
-export default function Item({ handler }: ItemProps) {
+export default function Item({ handler, itemId, checkDeleteId }: ItemProps) {
   const [checkCircle, setCheckCircle] = useState(false);
   const [clickBookMark, setClickBookMark] = useState(false);
   const mainEditValue = useRecoilValue(mainEditState);
 
+  useEffect(() => {
+    if (!mainEditValue) {
+      setCheckCircle(false);
+    }
+  }, [mainEditValue]);
+
   const handleClick = () => {
     if (mainEditValue) {
-      setCheckCircle(!checkCircle);
+      const newCheckState = !checkCircle;
+      setCheckCircle(newCheckState);
+      checkDeleteId(itemId, newCheckState);
     } else {
       handler();
     }
+  };
+
+  const handleBookMarkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setClickBookMark(!clickBookMark);
   };
 
   return (
@@ -34,7 +48,7 @@ export default function Item({ handler }: ItemProps) {
     >
       <div className='w-2/3 flex flex-col justify-between'>
         <div className='flex items-center mb-1'>
-          <div className='mr-1' onClick={() => setClickBookMark(!clickBookMark)}>
+          <div className='mr-1' onClick={handleBookMarkClick}>
             <BookMark isLike={clickBookMark} />
           </div>
           <div className='relative'>

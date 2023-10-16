@@ -2,6 +2,7 @@ import Tags from '@/components/Tag';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import SearchImg from '~/image/search.svg';
+import { search } from '../_util/api';
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState('');
@@ -13,6 +14,8 @@ export default function Search() {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // console.log(searchValue);
+    search(searchValue);
+    setClickSearch(false);
   };
 
   return (
