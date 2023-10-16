@@ -1,19 +1,51 @@
 'use client';
 
-import { useState } from 'react';
-
 import { Search, Item, Pagination, Buttons } from './_components';
+
+import { useEffect, useState } from 'react';
+
 import { Dropdown, Edit } from '@/components';
+import { useRouter } from 'next/navigation';
+
+import { useRecoilValue } from 'recoil';
+import { mainEditState } from '@/recoil/atoms';
 
 export default function Main() {
   const [data, setData] = useState([1, 2, 3, 4, 5, 6, 7]);
+
   const [postsPerPage, setPostsPerPage] = useState(3);
   const [curruntPage, setCurruntPage] = useState(1);
-  const [selectValue, setSelectValue] = useState('');
+  const [selectDropValue, setSelectDropValue] = useState('');
+  const [deleteItemId, setDeleteItemId] = useState<number[]>([]);
+
+  const mainEditValue = useRecoilValue(mainEditState);
+
+  const router = useRouter();
 
   const offset = (curruntPage - 1) * postsPerPage;
+
+  useEffect(() => {
+    if (!mainEditValue) {
+      setDeleteItemId([]);
+    }
+  }, [mainEditValue]);
+
+  const checkDeleteId = (itemId: number, isChecked: boolean) => {
+    if (isChecked) {
+      setDeleteItemId((prev) => [...prev, itemId]);
+    } else {
+      setDeleteItemId((prev) => prev.filter((id) => id !== itemId));
+    }
+  };
+
+  // console.log(deleteItemId);
+
   const totalPosts = data.slice(offset, offset + postsPerPage).map((el, idx) => {
-    return <Item key={idx} />;
+    const pageRouter = () => {
+      // group & solo page와 itemId별로 넣어주기
+      router.push('/detail/group/1234');
+    };
+    return <Item key={idx} itemId={idx} handler={pageRouter} checkDeleteId={checkDeleteId} />;
   });
 
   const setPage = (page: number) => {
@@ -38,7 +70,7 @@ export default function Main() {
               prevIcon={true}
               borderless={true}
               filled={false}
-              setState={setSelectValue}
+              setState={setSelectDropValue}
               rightSort={true}
             />
           </div>

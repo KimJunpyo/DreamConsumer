@@ -1,22 +1,42 @@
 import Label from './label';
-
 import CircleChart from './CircleChart';
 
 import { CheckCircle, Tag, BookMark } from '@/components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRecoilValue } from 'recoil';
 import { mainEditState } from '@/recoil/atoms';
 
-export default function Item() {
+type ItemProps = {
+  handler: () => void;
+  itemId: number;
+  checkDeleteId: (itemId: number, isChecked: boolean) => void;
+};
+
+export default function Item({ handler, itemId, checkDeleteId }: ItemProps) {
   const [checkCircle, setCheckCircle] = useState(false);
   const [clickBookMark, setClickBookMark] = useState(false);
   const mainEditValue = useRecoilValue(mainEditState);
 
+  useEffect(() => {
+    if (!mainEditValue) {
+      setCheckCircle(false);
+    }
+  }, [mainEditValue]);
+
   const handleClick = () => {
     if (mainEditValue) {
-      setCheckCircle(!checkCircle);
+      const newCheckState = !checkCircle;
+      setCheckCircle(newCheckState);
+      checkDeleteId(itemId, newCheckState);
+    } else {
+      handler();
     }
+  };
+
+  const handleBookMarkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setClickBookMark(!clickBookMark);
   };
 
   return (
@@ -28,8 +48,8 @@ export default function Item() {
     >
       <div className='w-2/3 flex flex-col justify-between'>
         <div className='flex items-center mb-1'>
-          <div className='mr-1' onClick={() => setClickBookMark(!clickBookMark)}>
-            <BookMark islike={clickBookMark} />
+          <div className='mr-1' onClick={handleBookMarkClick}>
+            <BookMark isLike={clickBookMark} />
           </div>
           <div className='relative'>
             <Label group='member' />
@@ -40,7 +60,14 @@ export default function Item() {
         </div>
         <div className=' font-neb text-grey-text text-xl mb-1 break-words'>제목</div>
         <div>
-          {/* 인덱스 번호를 /3한 뒤 나머지에 따른 색 나오게 (나머지 1 == redSmall, 나머지 2 == greenSmall, 나머지 0 == purpleSmall) */}
+          {/* {tags?.map((el, idx) => {
+            return (
+              <Tag key={idx} items={tagsSmallColor(idx)}>
+                {el.name}
+              </Tag>
+            );
+          })} */}
+
           <Tag items='redSmall'>#2024년</Tag>
           <Tag items='greenSmall'>#리조트</Tag>
           <Tag items='purpleSmall'>#연말</Tag>

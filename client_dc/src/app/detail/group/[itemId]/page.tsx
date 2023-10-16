@@ -1,14 +1,20 @@
-// 'use client';
+'use client';
 
 import { Button } from '@/components';
 import { MemberContainer, PercentContainer } from './_components';
 import Link from 'next/link';
 import { ImgBox, TagsContainer } from '../../_components';
 
-export default function Group() {
+type GroupProps = {
+  params: {};
+};
+
+export default function Group({ params }: GroupProps) {
   const totalPrice = 1200000;
   const percent = 80;
   const tags = ['#과일', '#네이버', '#제철', '#과일', '#네이버'];
+
+  // console.log(params);
 
   return (
     <div className='pt-[275px] flex justify-center'>
